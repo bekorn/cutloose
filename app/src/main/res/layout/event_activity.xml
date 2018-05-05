@@ -10,10 +10,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/unit"
-        android:text="@string/activities_title"
+        android:text="@string/event_title"
         android:textAppearance="@style/TextAppearance.AppCompat.Headline" />
 
     <android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="wrap_content" />
 </LinearLayout>
