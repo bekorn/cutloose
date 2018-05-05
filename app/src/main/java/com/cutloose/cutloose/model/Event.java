@@ -1,13 +1,13 @@
 package com.cutloose.cutloose.model;
 
-public class Activity {
+public class Event {
 
     private String name;
     private String pictureURL;
     private int popularity;
     private int activeEventsCount;
 
-    public Activity( String name, String pictureURL, int popularity, int activeEventsCount ) {
+    public Event( String name, String pictureURL, int popularity, int activeEventsCount ) {
         setName( name );
         setPictureURL( pictureURL );
         setPopularity( popularity );
