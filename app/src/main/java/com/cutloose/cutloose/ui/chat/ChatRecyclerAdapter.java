@@ -39,7 +39,12 @@ public class ChatRecyclerAdapter extends RecyclerView.Adapter<ChatRecyclerAdapte
     @NonNull
     @Override
     public MessageViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        ChatMessageItemBinding chatMessageItemBinding = DataBindingUtil.inflate(LayoutInflater.from(parent.getContext()), R.layout.chat_message_item, parent, false);
+
+        ChatMessageItemBinding chatMessageItemBinding = DataBindingUtil.inflate(
+                LayoutInflater.from(parent.getContext()),
+                R.layout.chat_message_item,
+                parent,
+                false);
 
         return new MessageViewHolder(chatMessageItemBinding);
     }

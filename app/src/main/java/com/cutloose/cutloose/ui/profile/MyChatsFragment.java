@@ -1,6 +1,5 @@
 package com.cutloose.cutloose.ui.profile;
 
-import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
@@ -15,12 +14,6 @@ import android.view.ViewGroup;
 
 import com.cutloose.cutloose.R;
 import com.cutloose.cutloose.databinding.MyChatsFragmentBinding;
-import com.cutloose.cutloose.model.Chat;
-import com.cutloose.cutloose.model.Message;
-import com.cutloose.cutloose.ui.chat.ChatRecyclerAdapter;
-import com.cutloose.cutloose.ui.chat.ChatViewModel;
-
-import java.util.ArrayList;
 
 /**
  * Created by finge on 5/6/2018.
@@ -35,7 +28,14 @@ public class MyChatsFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        myChatsFragmentBinding = DataBindingUtil.inflate(inflater, R.layout.my_chats_fragment, container, false);
+
+        myChatsFragmentBinding = DataBindingUtil.inflate(
+                inflater,
+                R.layout.my_chats_fragment,
+                container,
+                false
+        );
+
         return myChatsFragmentBinding.getRoot();
     }
 
@@ -47,15 +47,17 @@ public class MyChatsFragment extends Fragment {
 
         myChatsFragmentViewModel.fetchData(); //TODO: This should take in chat ID.
 
-        this.myChatsRecyclerAdapter = new MyChatsRecyclerAdapter( myChatsFragmentViewModel, this );
-
-        adaptRecyclerView(view);
+        adaptRecyclerView( view );
     }
 
     private void adaptRecyclerView(View view) {
+
         recyclerView = view.findViewById(R.id.my_chat_recycler);
+
+        myChatsRecyclerAdapter = new MyChatsRecyclerAdapter( myChatsFragmentViewModel, this );
+        recyclerView.setAdapter(myChatsRecyclerAdapter);
+
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(linearLayoutManager);
-        recyclerView.setAdapter(myChatsRecyclerAdapter);
     }
 }

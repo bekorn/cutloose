@@ -12,36 +12,39 @@ import com.cutloose.cutloose.ui.chat.ChatActivity;
  */
 
 public class MyChatsItemViewModel {
-    private Chat chat;
+    private Chat mChat;
 
     public MyChatsItemViewModel( Chat chat ) {
-        this.chat = chat;
+        mChat = chat;
     }
 
-    public void setChat( Chat chat) {
-        this.chat = chat;
+    public void setChat( Chat chat ) {
+        mChat = chat;
     }
 
     public Chat getChat() {
-        return chat;
+        return mChat;
     }
 
-    public String showOwners(){
-        int length = chat.getOwners().size() < 3 ? chat.getOwners().size() : 3;
-        String ownersString = "Chat with: ";
-        for(int i = 0 ; i < length; i++){
-            ownersString = ownersString + chat.getOwners().get(i).getName() + ", ";
+    public String showOwners() {
+        int length = Math.min( mChat.getOwners().size(), 3 );
+
+        StringBuilder ownersString = new StringBuilder( "Chat with: " );
+
+        for( int i = 0; i < length; i++ ) {
+            ownersString.append( mChat.getOwners().get( i ).getName() ).append( ", " );
         }
-        return ownersString;
+
+        return ownersString.toString();
     }
 
     public void onClickItem(View v) {
         //TODO: This process should be done in Activity instead of View Model
         Context context = v.getContext();
 
-        Intent intent = new Intent(context, ChatActivity.class);
-        intent.putExtra("isProfile", true);
-        intent.putExtra("owners",showOwners());
-        context.startActivity(intent);
+        Intent intent = new Intent( context, ChatActivity.class );
+        intent.putExtra( "isProfile", true );
+        intent.putExtra( "owners", showOwners() );
+        context.startActivity( intent );
     }
 }

@@ -5,12 +5,12 @@ import android.arch.lifecycle.MutableLiveData;
 
 import com.cutloose.cutloose.model.Chat;
 import com.cutloose.cutloose.repository.ChatRepository;
-import com.cutloose.cutloose.ui.common.BaseViewModel;
 import com.cutloose.cutloose.ui.common.RecyclerView.BaseRecyclerViewModel;
 
 import java.util.ArrayList;
 
 public class MyChatsFragmentViewModel extends BaseRecyclerViewModel<Chat> {
+
     private MutableLiveData<ArrayList<Chat>> chats = new MutableLiveData<>();
 
     @Override
