@@ -25,6 +25,7 @@ public class ChatActivity extends BaseActivity {
 
         if(isProfile) {
             chatActivityViewModel.searching.set(false);
+            setTitle(getIntent().getStringExtra("owners"));
         } else {
             chatActivityViewModel.searching.set(true);
             setFakeTimer();
