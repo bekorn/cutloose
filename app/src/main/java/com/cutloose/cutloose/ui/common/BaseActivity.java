@@ -18,7 +18,6 @@ public abstract class BaseActivity extends AppCompatActivity {
         super.onCreate( savedInstanceState );
 
         binding = DataBindingUtil.setContentView( this, getViewId() );
-        setContentView( getViewId() );
 
         Log.d( TAG, "Created -> " + getResources().getResourceName( getViewId() ) );
     }
