@@ -38,7 +38,7 @@ public class EventActivity extends BaseActivity {
         recyclerView.setLayoutManager( new GridLayoutManager( this, 3 ) );
         recyclerView.setAdapter( new EventRecyclerViewAdapter( mEventRecyclerViewModel, this ) );
 
-        mEventRecyclerViewModel.fetchEvents();
+        mEventRecyclerViewModel.fetchData();
     }
 
     @Override
