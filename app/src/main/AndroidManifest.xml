@@ -2,6 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.cutloose.cutloose">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -12,7 +15,8 @@
         <activity android:name=".ui.profile.ProfileActivity" />
         <activity android:name=".ui.chat.ChatActivity" />
         <activity android:name=".ui.activities.ActivitiesActivity" />
-        <activity android:name=".ui.login.LoginActivity">
+        <activity android:name=".ui.login.LoginActivity"
+            android:theme="@style/AppThemeNoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
