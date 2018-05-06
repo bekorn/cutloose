@@ -14,8 +14,11 @@ import com.cutloose.cutloose.ui.chat.ChatActivity;
 public class MyChatsItemViewModel {
     private Chat chat;
 
+    public MyChatsItemViewModel( Chat chat ) {
+        this.chat = chat;
+    }
 
-    public void setChat(Chat chat) {
+    public void setChat( Chat chat) {
         this.chat = chat;
     }
 

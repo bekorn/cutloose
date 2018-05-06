@@ -38,6 +38,7 @@ public class MyChatsFragment extends Fragment {
         myChatsFragmentBinding = DataBindingUtil.inflate(inflater, R.layout.my_chats_fragment, container, false);
         return myChatsFragmentBinding.getRoot();
     }
+
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -46,11 +47,9 @@ public class MyChatsFragment extends Fragment {
 
         myChatsFragmentViewModel.fetchData(); //TODO: This should take in chat ID.
 
-        this.myChatsRecyclerAdapter = new MyChatsRecyclerAdapter(new ArrayList<Chat>());
+        this.myChatsRecyclerAdapter = new MyChatsRecyclerAdapter( myChatsFragmentViewModel, this );
 
         adaptRecyclerView(view);
-
-        observeChats();
     }
 
     private void adaptRecyclerView(View view) {
@@ -58,14 +57,5 @@ public class MyChatsFragment extends Fragment {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(myChatsRecyclerAdapter);
-    }
-
-    private void observeChats() {
-        myChatsFragmentViewModel.getChats().observe(this, new Observer<ArrayList<Chat>>() {
-            @Override
-            public void onChanged(@Nullable ArrayList<Chat> chats) {
-                myChatsRecyclerAdapter.updateItems(chats);
-            }
-        });
     }
 }
