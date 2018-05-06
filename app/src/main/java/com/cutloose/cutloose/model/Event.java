@@ -1,6 +1,6 @@
 package com.cutloose.cutloose.model;
 
-public class Event {
+public class Event extends BaseModel {
 
     private String name;
     private String pictureURL;

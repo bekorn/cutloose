@@ -3,7 +3,7 @@ package com.cutloose.cutloose.model;
 import java.util.Date;
 
 
-public class Message {
+public class Message extends BaseModel {
     private Date date;
     private String content;
     private String userId;

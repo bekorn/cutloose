@@ -7,7 +7,7 @@ import java.util.Date;
  * Created by finge on 5/6/2018.
  */
 
-public class Profile {
+public class Profile extends BaseModel {
     private String id;
     private String name;
     private String photoPath;

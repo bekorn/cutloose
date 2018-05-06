@@ -6,7 +6,7 @@ import java.util.ArrayList;
  * Created by finge on 5/6/2018.
  */
 
-public class Chat {
+public class Chat extends BaseModel {
     private String id;
     private Event eventType;
     private ArrayList<Profile> owners;

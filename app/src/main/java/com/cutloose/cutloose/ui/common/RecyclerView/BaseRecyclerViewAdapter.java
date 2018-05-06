@@ -7,14 +7,17 @@ import android.databinding.DataBindingUtil;
 import android.databinding.ViewDataBinding;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v7.util.DiffUtil;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.cutloose.cutloose.model.BaseModel;
+
 import java.util.ArrayList;
 
-public abstract class BaseRecyclerViewAdapter <Model> extends RecyclerView.Adapter<BaseRecyclerViewAdapter.ViewHolder> {
+public abstract class BaseRecyclerViewAdapter<Model extends BaseModel> extends RecyclerView.Adapter<BaseRecyclerViewAdapter.ViewHolder> {
 
     class ViewHolder extends RecyclerView.ViewHolder {
 
@@ -25,25 +28,22 @@ public abstract class BaseRecyclerViewAdapter <Model> extends RecyclerView.Adapt
 
             mBinding = binding;
         }
-
-        private void bind( Model model ) {
-            viewHolderBinder( mBinding, model );
-//            mBinding.setVariable( BR.viewModel, new EventItemViewModel( (Event) model ) );
-        }
     }
 
     protected abstract void viewHolderBinder( ViewDataBinding binding, Model model );
 
     protected abstract int getItemViewId();
 
-    protected final MutableLiveData<ArrayList<Model>> mData = new MutableLiveData<>();
+    protected final ArrayList<Model> mData = new ArrayList<>();
 
     public BaseRecyclerViewAdapter( BaseRecyclerViewModel<Model> baseRecyclerViewModel, LifecycleOwner lifecycleOwner ) {
+        this( baseRecyclerViewModel.getLiveData(), lifecycleOwner );
+    }
+
+    public BaseRecyclerViewAdapter( MutableLiveData<ArrayList<Model>> observableData, LifecycleOwner lifecycleOwner ) {
         super();
 
-        mData.setValue( new ArrayList<Model>() );
-
-        baseRecyclerViewModel.getLiveData().observe( lifecycleOwner, new Observer<ArrayList<Model>>() {
+        observableData.observe( lifecycleOwner, new Observer<ArrayList<Model>>() {
             @Override
             public void onChanged( @Nullable ArrayList<Model> changedData ) {
                 setData( changedData );
@@ -67,18 +67,43 @@ public abstract class BaseRecyclerViewAdapter <Model> extends RecyclerView.Adapt
 
     @Override
     public void onBindViewHolder( @NonNull BaseRecyclerViewAdapter.ViewHolder holder, int position ) {
-        if( mData.getValue() != null ) {
-            holder.bind( mData.getValue().get( position ) );
-        }
+
+        viewHolderBinder( holder.mBinding, mData.get( position ) );
     }
 
     @Override
     public int getItemCount() {
-        return mData.getValue() == null ? 0 : mData.getValue().size();
+
+        return mData.size();
     }
 
-    public void setData( ArrayList<Model> changedData ) {
-        mData.setValue( changedData );
-        notifyDataSetChanged();
+    public void setData( final ArrayList<Model> newData ) {
+
+        DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff( new DiffUtil.Callback() {
+            @Override
+            public int getOldListSize() {
+                return mData.size();
+            }
+
+            @Override
+            public int getNewListSize() {
+                return newData.size();
+            }
+
+            @Override
+            public boolean areItemsTheSame( int oldItemPosition, int newItemPosition ) {
+                return mData.get( oldItemPosition ).equals( newData.get( newItemPosition ) );
+            }
+
+            @Override
+            public boolean areContentsTheSame( int oldItemPosition, int newItemPosition ) {
+                return mData.get( oldItemPosition ).getContent().equals( newData.get( newItemPosition ).getContent() );
+            }
+        } );
+
+        mData.clear();
+        mData.addAll( newData );
+
+        diffResult.dispatchUpdatesTo( this );
     }
 }
