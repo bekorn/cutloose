@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 
 public class ChatViewModel extends BaseViewModel {
-    private MutableLiveData<ArrayList<Message>> messages = new MutableLiveData<>();;
+    private MutableLiveData<ArrayList<Message>> messages = new MutableLiveData<>();
     public ObservableField<String> messageInputContent = new ObservableField<>();
 
     public void fetchData() {

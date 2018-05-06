@@ -11,35 +11,37 @@ import com.cutloose.cutloose.ui.common.BaseActivity;
 
 public class ChatActivity extends BaseActivity {
 
-    ChatActivityBinding chatActivityBinding;
-    ChatActivityViewModel chatActivityViewModel;
+    ChatActivityBinding mChatActivityBinding;
+    ChatActivityViewModel mChatActivityViewModel;
 
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        boolean isProfile = getIntent().getBooleanExtra("isProfile",false);
-        chatActivityViewModel = ViewModelProviders.of(this).get(ChatActivityViewModel.class);
+    public void onCreate( @Nullable Bundle savedInstanceState ) {
+        super.onCreate( savedInstanceState );
 
-        chatActivityBinding = (ChatActivityBinding) binding;
-        chatActivityBinding.setViewModel(chatActivityViewModel);
+        mChatActivityViewModel = ViewModelProviders.of( this ).get( ChatActivityViewModel.class );
 
-        if(isProfile) {
-            chatActivityViewModel.searching.set(false);
-            setTitle(getIntent().getStringExtra("owners"));
+        mChatActivityBinding = (ChatActivityBinding) mViewDataBinding;
+        mChatActivityBinding.setViewModel( mChatActivityViewModel );
+
+        boolean isProfile = getIntent().getBooleanExtra( "isProfile", false );
+
+        if( isProfile ) {
+            mChatActivityViewModel.searching.set( false );
+            setTitle( getIntent().getStringExtra( "owners" ) );
         } else {
-            chatActivityViewModel.searching.set(true);
+            mChatActivityViewModel.searching.set( true );
             setFakeTimer();
         }
     }
 
     private void setFakeTimer() {
-        new CountDownTimer(3000, 1000) {
+        new CountDownTimer( 3000, 1000 ) {
 
-            public void onTick(long millisUntilFinished) {
+            public void onTick( long millisUntilFinished ) {
             }
 
             public void onFinish() {
-                chatActivityViewModel.searching.set(false);
+                mChatActivityViewModel.searching.set( false );
             }
 
         }.start();

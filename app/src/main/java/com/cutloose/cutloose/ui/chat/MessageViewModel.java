@@ -10,6 +10,10 @@ public class MessageViewModel extends ViewModel {
     private Message message;
     private Boolean owned;
 
+    public MessageViewModel( Message message ) {
+        this.message = message;
+    }
+
     public boolean checkOwnership() {
         if(owned != null) return owned;
 

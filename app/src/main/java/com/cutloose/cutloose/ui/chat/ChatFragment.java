@@ -1,7 +1,6 @@
 package com.cutloose.cutloose.ui.chat;
 
 
-import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
@@ -16,9 +15,6 @@ import android.view.ViewGroup;
 
 import com.cutloose.cutloose.R;
 import com.cutloose.cutloose.databinding.ChatFragmentBinding;
-import com.cutloose.cutloose.model.Message;
-
-import java.util.ArrayList;
 
 public class ChatFragment extends Fragment implements View.OnLayoutChangeListener{
 
@@ -34,11 +30,11 @@ public class ChatFragment extends Fragment implements View.OnLayoutChangeListene
         chatViewModel = ViewModelProviders.of(this).get(ChatViewModel.class);
         chatFragmentBinding.setViewModel(chatViewModel);
 
-        chatViewModel.fetchData(); //TODO: This should take in chat ID.
-        this.chatRecyclerAdapter = new ChatRecyclerAdapter(new ArrayList<Message>());
+        this.chatRecyclerAdapter = new ChatRecyclerAdapter( chatViewModel.getMessages(), this );
+
         adaptRecyclerView(view);
 
-        observeMessages();
+        chatViewModel.fetchData(); //TODO: This should take in chat ID.
     }
 
     @Nullable
@@ -48,15 +44,15 @@ public class ChatFragment extends Fragment implements View.OnLayoutChangeListene
         return chatFragmentBinding.getRoot();
     }
 
-    private void observeMessages() {
-        chatViewModel.getMessages().observe(this, new Observer<ArrayList<Message>>() {
-            @Override
-            public void onChanged(@Nullable ArrayList<Message> messages) {
-                chatRecyclerAdapter.updateItems(messages);
-                recyclerView.smoothScrollToPosition(chatRecyclerAdapter.getItemCount());
-            }
-        });
-    }
+//    private void observeMessages() {
+//        chatViewModel.getMessages().observe(this, new Observer<ArrayList<Message>>() {
+//            @Override
+//            public void onChanged(@Nullable ArrayList<Message> messages) {
+//                chatRecyclerAdapter.updateItems(messages);
+//                recyclerView.smoothScrollToPosition(chatRecyclerAdapter.getItemCount());
+//            }
+//        });
+//    }
 
     private void adaptRecyclerView(View view) {
         recyclerView = view.findViewById(R.id.chat_recycler);
