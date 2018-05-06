@@ -17,13 +17,18 @@ public class ChatActivity extends BaseActivity {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        boolean isProfile = getIntent().getBooleanExtra("isProfile",false);
         chatActivityViewModel = ViewModelProviders.of(this).get(ChatActivityViewModel.class);
 
         chatActivityBinding = (ChatActivityBinding) binding;
         chatActivityBinding.setViewModel(chatActivityViewModel);
-        chatActivityViewModel.searching.set(true);
-        setFakeTimer();
+
+        if(isProfile) {
+            chatActivityViewModel.searching.set(false);
+        } else {
+            chatActivityViewModel.searching.set(true);
+            setFakeTimer();
+        }
     }
 
     private void setFakeTimer() {

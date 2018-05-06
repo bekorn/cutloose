@@ -37,6 +37,7 @@ public class MyChatsItemViewModel {
         Context context = v.getContext();
 
         Intent intent = new Intent(context, ChatActivity.class);
+        intent.putExtra("isProfile", true);
         context.startActivity(intent);
     }
 }
