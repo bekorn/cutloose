@@ -7,7 +7,10 @@ public class Event {
     private int popularity;
     private int activeEventsCount;
 
-    public Event( String name, String pictureURL, int popularity, int activeEventsCount ) {
+    public Event() {
+    }
+
+    public Event(String name, String pictureURL, int popularity, int activeEventsCount ) {
         setName( name );
         setPictureURL( pictureURL );
         setPopularity( popularity );

@@ -36,6 +36,9 @@ public class Chat {
         return owners;
     }
 
+    public Chat() {
+    }
+
     public Chat(String id, Event eventType, ArrayList<Profile> owners) {
 
         this.id = id;
