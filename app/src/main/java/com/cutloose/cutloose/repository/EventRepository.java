@@ -9,7 +9,7 @@ import java.util.List;
 public class EventRepository implements BaseRepository<Event> {
 
     @Override
-    public List<Event> getAll() {
+    public ArrayList<Event> getAll() {
 
         int amount = (int) (Math.random() * 12 + 10);
         return RandomModelGenerator.getRandomModel( amount );
@@ -29,9 +29,9 @@ class RandomModelGenerator {
                 (int) (Math.random() * 12) + 5 );
     }
 
-    static List<Event> getRandomModel( int amount ) {
+    static ArrayList<Event> getRandomModel( int amount ) {
 
-        List<Event> result = new ArrayList<>();
+        ArrayList<Event> result = new ArrayList<>();
 
         for( int i = 0; i < amount; i++ ) {
             result.add( getRandomModel() );
