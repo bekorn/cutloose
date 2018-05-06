@@ -1,8 +1,10 @@
 package com.cutloose.cutloose.ui.login;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
 import android.text.method.LinkMovementMethod;
 import android.view.View;
 import android.view.WindowManager;
@@ -11,6 +13,7 @@ import android.widget.TextView;
 import com.cutloose.cutloose.R;
 import com.cutloose.cutloose.ui.chat.ChatActivity;
 import com.cutloose.cutloose.ui.common.BaseActivity;
+import com.cutloose.cutloose.ui.event.EventActivity;
 
 public class LoginActivity extends BaseActivity {
 
@@ -18,6 +21,7 @@ public class LoginActivity extends BaseActivity {
     @Override
     public void onCreate( @Nullable Bundle savedInstanceState ) {
         super.onCreate( savedInstanceState );
+        logIn();
     }
 
     @Override
@@ -25,8 +29,15 @@ public class LoginActivity extends BaseActivity {
         return R.layout.login_activity;
     }
 
-    public void logIn(View view){
-        Intent intent = new Intent(this, ChatActivity.class);
-        startActivity(intent);
+    public void logIn(){
+        final Context context = this;
+
+        findViewById(R.id.sign_in_button).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(context, EventActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 }
