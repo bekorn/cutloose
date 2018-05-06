@@ -12,4 +12,7 @@
     <string name="forgot_password"><a href="http://www.google.com">Forgot my password...</a></string>
     <string name="sign_up"><a href="http://www.google.com">Sign Up!</a></string>
 
+    <string name="event_title">Activities</string>
+    <string name="event_item_popularity_hint">Popularity</string>
+    <string name="event_item_active_count_hint">Active Events</string>
 </resources>
