@@ -8,7 +8,7 @@ import com.cutloose.cutloose.ui.common.BaseViewModel;
 
 import java.util.ArrayList;
 
-class EventRecyclerViewModel extends BaseViewModel {
+public class EventRecyclerViewModel extends BaseViewModel {
 
     private final EventRepository mEventRepository = new EventRepository();
     private final MutableLiveData<ArrayList<Event>> mEventList = new MutableLiveData<>();

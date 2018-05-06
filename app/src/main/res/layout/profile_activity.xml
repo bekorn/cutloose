@@ -30,5 +30,21 @@
             android:layout_margin="20dp"
             android:text="@{viewModel.profile.name}"/>
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/my_chats"
+            android:textSize="24sp"
+            android:layout_marginLeft="10dp"/>
+
+        <fragment
+            android:id="@+id/fragment2"
+            android:name="com.cutloose.cutloose.ui.profile.MyChatsFragment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:layout="@layout/my_chats_fragment" />
+
     </LinearLayout>
+
+
 </layout>

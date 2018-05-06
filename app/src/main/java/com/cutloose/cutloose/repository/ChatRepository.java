@@ -51,6 +51,7 @@ public class ChatRepository {
             }
 
             Chat chat = new Chat(i + "", e, profiles);
+            chatList.add(chat);
         }
 
         chats.setValue(chatList);

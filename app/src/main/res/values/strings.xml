@@ -16,4 +16,6 @@
     <string name="event_title">Activities</string>
     <string name="event_item_popularity_hint">Popularity</string>
     <string name="event_item_active_count_hint">Active Events</string>
+    <string name="my_chats">My Chats</string>
+    <string name="profile">Profile</string>
 </resources>
