@@ -34,7 +34,7 @@ public class ChatFragment extends Fragment implements View.OnLayoutChangeListene
         chatViewModel = ViewModelProviders.of(this).get(ChatViewModel.class);
         chatFragmentBinding.setViewModel(chatViewModel);
 
-        chatViewModel.init(); //TODO: This should take in chat ID.
+        chatViewModel.fetchData(); //TODO: This should take in chat ID.
         this.chatRecyclerAdapter = new ChatRecyclerAdapter(new ArrayList<Message>());
         adaptRecyclerView(view);
 

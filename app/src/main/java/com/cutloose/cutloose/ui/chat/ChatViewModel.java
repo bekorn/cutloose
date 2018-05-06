@@ -15,7 +15,7 @@ public class ChatViewModel extends BaseViewModel {
     private MutableLiveData<ArrayList<Message>> messages = new MutableLiveData<>();;
     public ObservableField<String> messageInputContent = new ObservableField<>();
 
-    public void init() {
+    public void fetchData() {
         ChatRepository chatRepository = ChatRepository.getInstance();
         //TODO: Request the messages by a real ID
         chatRepository.getChatMessages(null, messages);
