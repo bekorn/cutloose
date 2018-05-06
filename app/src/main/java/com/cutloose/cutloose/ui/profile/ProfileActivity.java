@@ -22,6 +22,8 @@ public class ProfileActivity extends BaseActivity {
         profileActivityBinding = (ProfileActivityBinding)this.binding;
         profileActivityBinding.setViewModel(profileViewModel);
         profileViewModel.fetchData();
+
+        setTitle(R.string.profile);
     }
 
 

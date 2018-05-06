@@ -22,6 +22,8 @@ public class LoginActivity extends BaseActivity {
     public void onCreate( @Nullable Bundle savedInstanceState ) {
         super.onCreate( savedInstanceState );
         logIn();
+        setTitle(R.string.login_button);
+
     }
 
     @Override

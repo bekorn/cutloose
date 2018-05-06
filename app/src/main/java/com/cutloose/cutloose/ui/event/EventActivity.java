@@ -29,6 +29,8 @@ public class EventActivity extends BaseActivity {
     public void onCreate( @Nullable Bundle savedInstanceState ) {
         super.onCreate( savedInstanceState );
 
+        setTitle(R.string.event_title);
+
         mEventRecyclerViewModel = ViewModelProviders.of( this ).get( EventRecyclerViewModel.class );
 
         RecyclerView recyclerView = findViewById( R.id.event_recycler_view );
