@@ -38,7 +38,7 @@ public class ChatRepository {
 
         for(int i = 0; i < 3; i++) {
             Event e = new Event();
-            e.setName("Test");
+            e.setName("Brunch");
 
             ArrayList<Profile> profiles = new ArrayList<>();
 

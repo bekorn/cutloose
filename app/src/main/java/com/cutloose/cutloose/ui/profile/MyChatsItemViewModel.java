@@ -38,6 +38,7 @@ public class MyChatsItemViewModel {
 
         Intent intent = new Intent(context, ChatActivity.class);
         intent.putExtra("isProfile", true);
+        intent.putExtra("owners",showOwners());
         context.startActivity(intent);
     }
 }
