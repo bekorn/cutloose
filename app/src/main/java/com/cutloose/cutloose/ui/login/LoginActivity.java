@@ -18,11 +18,8 @@ public class LoginActivity extends BaseActivity {
     @Override
     public void onCreate( @Nullable Bundle savedInstanceState ) {
         super.onCreate( savedInstanceState );
-        TextView signUp = findViewById(R.id.login_activity_text_sign_up);
-        signUp.setMovementMethod(LinkMovementMethod.getInstance());
-        TextView forgotPassword = findViewById(R.id.login_activity_text_forgot_password);
-        forgotPassword.setMovementMethod(LinkMovementMethod.getInstance());
     }
+    
     @Override
     protected int getViewId() {
         return R.layout.login_activity;
