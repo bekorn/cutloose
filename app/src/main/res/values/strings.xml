@@ -3,4 +3,13 @@
 
     <!-- CHAT -->
     <string name="chat_hint">Type a message!</string>
+
+    <!-- LOGIN -->
+    <string name="login_email_hint">E-mail</string>
+    <string name="login_password_hint">Password</string>
+    <string name="app_description">Match, chat, meet up!</string>
+    <string name="login_button">Log in!</string>
+    <string name="forgot_password"><a href="http://www.google.com">Forgot my password...</a></string>
+    <string name="sign_up"><a href="http://www.google.com">Sign Up!</a></string>
+
 </resources>
