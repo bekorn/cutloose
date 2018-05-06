@@ -19,7 +19,7 @@ public class LoginActivity extends BaseActivity {
     public void onCreate( @Nullable Bundle savedInstanceState ) {
         super.onCreate( savedInstanceState );
     }
-    
+
     @Override
     protected int getViewId() {
         return R.layout.login_activity;
