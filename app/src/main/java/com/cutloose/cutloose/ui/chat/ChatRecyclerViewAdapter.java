@@ -12,9 +12,9 @@ import com.cutloose.cutloose.ui.common.RecyclerView.BaseRecyclerViewAdapter;
 
 import java.util.ArrayList;
 
-public class ChatRecyclerAdapter extends BaseRecyclerViewAdapter<Message> {
+public class ChatRecyclerViewAdapter extends BaseRecyclerViewAdapter<Message> {
 
-    public ChatRecyclerAdapter( MutableLiveData<ArrayList<Message>> observableData, LifecycleOwner lifecycleOwner ) {
+    public ChatRecyclerViewAdapter( MutableLiveData<ArrayList<Message>> observableData, LifecycleOwner lifecycleOwner ) {
         super( observableData, lifecycleOwner );
     }
 
