@@ -19,7 +19,7 @@ public class ChatRecyclerViewAdapter extends BaseRecyclerViewAdapter<Message> {
     }
 
     @Override
-    protected void viewHolderBinder( ViewDataBinding binding, Message message ) {
+    protected void setViewHolderBindings( ViewDataBinding binding, Message message ) {
         binding.setVariable( BR.viewModel, new MessageViewModel( message ) );
     }
 

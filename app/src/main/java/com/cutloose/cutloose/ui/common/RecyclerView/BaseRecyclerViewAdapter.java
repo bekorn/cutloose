@@ -30,11 +30,12 @@ public abstract class BaseRecyclerViewAdapter<Model extends BaseModel> extends R
         }
     }
 
-    protected abstract void viewHolderBinder( ViewDataBinding binding, Model model );
+    protected final ArrayList<Model> mData = new ArrayList<>();
+    public MutableLiveData<Model> mOnItemClickEvent = new MutableLiveData<>();
+
+    protected abstract void setViewHolderBindings( ViewDataBinding binding, Model model );
 
     protected abstract int getItemViewId();
-
-    protected final ArrayList<Model> mData = new ArrayList<>();
 
     public BaseRecyclerViewAdapter( BaseRecyclerViewModel<Model> baseRecyclerViewModel, LifecycleOwner lifecycleOwner ) {
         this( baseRecyclerViewModel.getLiveData(), lifecycleOwner );
@@ -68,7 +69,16 @@ public abstract class BaseRecyclerViewAdapter<Model extends BaseModel> extends R
     @Override
     public void onBindViewHolder( @NonNull BaseRecyclerViewAdapter.ViewHolder holder, int position ) {
 
-        viewHolderBinder( holder.mBinding, mData.get( position ) );
+        final Model data = mData.get( position );
+
+        setViewHolderBindings( holder.mBinding, data );
+
+        holder.mBinding.getRoot().setOnClickListener( new View.OnClickListener() {
+            @Override
+            public void onClick( View v ) {
+                mOnItemClickEvent.postValue( data );
+            }
+        } );
     }
 
     @Override

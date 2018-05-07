@@ -1,42 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
+
     <data>
+
         <variable
             name="viewModel"
-            type="com.cutloose.cutloose.ui.profile.MyChatsItemViewModel"/>
-        <import type="android.view.View"/>
-        <import type="android.view.Gravity"/>
+            type="com.cutloose.cutloose.ui.profile.MyChatsItemViewModel" />
+
+        <import type="android.view.View" />
+
+        <import type="android.view.Gravity" />
     </data>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:onClick="@{(v) -> viewModel.onClickItem(v)}">
+        android:orientation="vertical">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="10dp">
 
             <TextView
-                tools:text="Deneme mesaj deneme"
-                android:text="@{viewModel.showOwners()}"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"/>
+                android:text="@string/my_chats_item_prefix" />
+
             <TextView
-                tools:text="Deneme mesaj deneme"
-                android:text="@{viewModel.chat.eventType.name}"
                 android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{viewModel.getChat().showOwners()}"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                tools:text="Participants" />
+
+            <TextView
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:gravity="end"/>
+                android:gravity="end"
+                android:text="@{viewModel.chat.eventType.name}"
+                tools:text="Event Type" />
 
         </LinearLayout>
+
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="@android:color/darker_gray"/>
+            android:background="@android:color/darker_gray" />
     </LinearLayout>
 </layout>

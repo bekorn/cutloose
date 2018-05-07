@@ -3,8 +3,8 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/../../../../../../../../finge/Desktop/barkin/sabanci_lisans/6donem/cs310/cutloose/.idea/cutloose.iml" filepath="$PROJECT_DIR$/../../../../../../../../finge/Desktop/barkin/sabanci_lisans/6donem/cs310/cutloose/.idea/cutloose.iml" />
       <module fileurl="file://$PROJECT_DIR$/cutloose.iml" filepath="$PROJECT_DIR$/cutloose.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../../../../../../../../finge/Desktop/barkin/sabanci_lisans/6donem/cs310/cutloose/.idea/cutloose.iml" filepath="$PROJECT_DIR$/../../../../../../../../finge/Desktop/barkin/sabanci_lisans/6donem/cs310/cutloose/.idea/cutloose.iml" />
     </modules>
   </component>
 </project>

@@ -1,6 +1,8 @@
 package com.cutloose.cutloose.ui.profile;
 
+import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -14,6 +16,8 @@ import android.view.ViewGroup;
 
 import com.cutloose.cutloose.R;
 import com.cutloose.cutloose.databinding.MyChatsFragmentBinding;
+import com.cutloose.cutloose.model.Chat;
+import com.cutloose.cutloose.ui.chat.ChatActivity;
 
 /**
  * Created by finge on 5/6/2018.
@@ -22,7 +26,7 @@ import com.cutloose.cutloose.databinding.MyChatsFragmentBinding;
 public class MyChatsFragment extends Fragment {
     MyChatsFragmentBinding myChatsFragmentBinding;
     MyChatsFragmentViewModel myChatsFragmentViewModel;
-    MyChatsRecyclerAdapter myChatsRecyclerAdapter;
+    MyChatsRecyclerViewAdapter myChatsRecyclerViewAdapter;
     RecyclerView recyclerView;
 
     @Nullable
@@ -54,8 +58,20 @@ public class MyChatsFragment extends Fragment {
 
         recyclerView = view.findViewById(R.id.my_chat_recycler);
 
-        myChatsRecyclerAdapter = new MyChatsRecyclerAdapter( myChatsFragmentViewModel, this );
-        recyclerView.setAdapter(myChatsRecyclerAdapter);
+        myChatsRecyclerViewAdapter = new MyChatsRecyclerViewAdapter( myChatsFragmentViewModel, this );
+
+        myChatsRecyclerViewAdapter.mOnItemClickEvent.observe( this, new Observer<Chat>() {
+            @Override
+            public void onChanged( @Nullable Chat chat ) {
+
+                Intent intent = new Intent( getContext(), ChatActivity.class );
+                intent.putExtra( "isProfile", true );
+                intent.putExtra( "owners", chat.showOwners() );
+                startActivity( intent );
+            }
+        } );
+
+        recyclerView.setAdapter( myChatsRecyclerViewAdapter );
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(linearLayoutManager);

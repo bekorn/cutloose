@@ -16,7 +16,7 @@ public class EventRecyclerViewAdapter extends BaseRecyclerViewAdapter<Event> {
     }
 
     @Override
-    protected void viewHolderBinder( ViewDataBinding binding, Event event ) {
+    protected void setViewHolderBindings( ViewDataBinding binding, Event event ) {
         binding.setVariable( BR.viewModel, new EventItemViewModel( event ) );
     }
 
