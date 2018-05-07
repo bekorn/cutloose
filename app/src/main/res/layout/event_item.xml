@@ -15,8 +15,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/unit"
         app:cardCornerRadius="@dimen/unit"
-        app:contentPadding="@dimen/unit"
-        android:onClick="@{(v) -> viewModel.onClickItem(v)}">
+        app:contentPadding="@dimen/unit">
 
         <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
