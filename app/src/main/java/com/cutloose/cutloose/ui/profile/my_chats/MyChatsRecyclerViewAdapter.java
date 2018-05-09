@@ -1,4 +1,4 @@
-package com.cutloose.cutloose.ui.profile;
+package com.cutloose.cutloose.ui.profile.my_chats;
 
 import android.arch.lifecycle.LifecycleOwner;
 import android.databinding.ViewDataBinding;

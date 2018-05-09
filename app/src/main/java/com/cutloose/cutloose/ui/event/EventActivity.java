@@ -22,7 +22,7 @@ public class EventActivity extends BaseActivity {
     static private final String TAG = "EventActivity";
 
     @Override
-    protected int getViewId() {
+    protected int getLayoutId() {
         return R.layout.event_activity;
     }
 

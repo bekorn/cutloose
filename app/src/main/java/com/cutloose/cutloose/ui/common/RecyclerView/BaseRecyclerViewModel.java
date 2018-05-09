@@ -8,7 +8,11 @@ import java.util.ArrayList;
 
 public abstract class BaseRecyclerViewModel <Model> extends BaseViewModel {
 
-    public abstract MutableLiveData<ArrayList<Model>> getLiveData();
+    protected MutableLiveData<ArrayList<Model>> mData = new MutableLiveData<>();
+
+    public MutableLiveData<ArrayList<Model>> getLiveData() {
+        return mData;
+    }
 
     public abstract void fetchData();
 }

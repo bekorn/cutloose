@@ -1,4 +1,4 @@
-package com.cutloose.cutloose.ui.profile;
+package com.cutloose.cutloose.ui.profile.my_chats;
 
 import com.cutloose.cutloose.model.Chat;
 

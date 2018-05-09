@@ -39,7 +39,7 @@
 
         <fragment
             android:id="@+id/fragment2"
-            android:name="com.cutloose.cutloose.ui.profile.MyChatsFragment"
+            android:name="com.cutloose.cutloose.ui.profile.my_chats.MyChatsFragment"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             tools:layout="@layout/my_chats_fragment" />

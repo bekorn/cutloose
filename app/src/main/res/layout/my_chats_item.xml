@@ -6,7 +6,7 @@
 
         <variable
             name="viewModel"
-            type="com.cutloose.cutloose.ui.profile.MyChatsItemViewModel" />
+            type="com.cutloose.cutloose.ui.profile.my_chats.MyChatsItemViewModel" />
 
         <import type="android.view.View" />
 
