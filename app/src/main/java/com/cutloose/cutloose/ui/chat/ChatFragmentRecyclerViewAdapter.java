@@ -2,20 +2,22 @@ package com.cutloose.cutloose.ui.chat;
 
 
 import android.arch.lifecycle.LifecycleOwner;
-import android.arch.lifecycle.MutableLiveData;
 import android.databinding.ViewDataBinding;
+import android.view.View;
 
 import com.cutloose.cutloose.R;
 import com.cutloose.cutloose.BR;
 import com.cutloose.cutloose.model.Message;
+import com.cutloose.cutloose.ui.common.Action;
+import com.cutloose.cutloose.ui.common.ActionType;
 import com.cutloose.cutloose.ui.common.RecyclerView.BaseRecyclerViewAdapter;
+import com.cutloose.cutloose.ui.common.RecyclerView.BaseRecyclerViewModel;
 
-import java.util.ArrayList;
 
-public class ChatRecyclerViewAdapter extends BaseRecyclerViewAdapter<Message> {
+public class ChatFragmentRecyclerViewAdapter extends BaseRecyclerViewAdapter<Message> {
 
-    public ChatRecyclerViewAdapter( MutableLiveData<ArrayList<Message>> observableData, LifecycleOwner lifecycleOwner ) {
-        super( observableData, lifecycleOwner );
+    public ChatFragmentRecyclerViewAdapter( BaseRecyclerViewModel<Message> baseRecyclerViewModel, LifecycleOwner lifecycleOwner ) {
+        super( baseRecyclerViewModel, lifecycleOwner );
     }
 
     @Override

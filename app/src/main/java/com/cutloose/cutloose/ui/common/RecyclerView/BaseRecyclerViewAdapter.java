@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.cutloose.cutloose.model.BaseModel;
+import com.cutloose.cutloose.ui.common.Action;
 
 import java.util.ArrayList;
 
@@ -23,7 +24,7 @@ public abstract class BaseRecyclerViewAdapter<Model extends BaseModel> extends R
 
         private ViewDataBinding mBinding;
 
-        public ViewHolder( View instructorView, ViewDataBinding binding ) {
+        ViewHolder( View instructorView, ViewDataBinding binding ) {
             super( instructorView );
 
             mBinding = binding;
@@ -31,17 +32,19 @@ public abstract class BaseRecyclerViewAdapter<Model extends BaseModel> extends R
     }
 
     protected final ArrayList<Model> mData = new ArrayList<>();
-    public MutableLiveData<Model> mOnItemClickEvent = new MutableLiveData<>();
+    protected final MutableLiveData<Action<Model>> mAction;
 
     protected abstract void setViewHolderBindings( ViewDataBinding binding, Model model );
 
     protected abstract int getItemViewId();
 
     public BaseRecyclerViewAdapter( BaseRecyclerViewModel<Model> baseRecyclerViewModel, LifecycleOwner lifecycleOwner ) {
-        this( baseRecyclerViewModel.getLiveData(), lifecycleOwner );
+        this( baseRecyclerViewModel.getLiveData(), baseRecyclerViewModel.getAction(), lifecycleOwner );
     }
 
-    public BaseRecyclerViewAdapter( MutableLiveData<ArrayList<Model>> observableData, LifecycleOwner lifecycleOwner ) {
+    public BaseRecyclerViewAdapter( MutableLiveData<ArrayList<Model>> observableData,
+                                    MutableLiveData<Action<Model>> action,
+                                    LifecycleOwner lifecycleOwner ) {
         super();
 
         observableData.observe( lifecycleOwner, new Observer<ArrayList<Model>>() {
@@ -50,6 +53,8 @@ public abstract class BaseRecyclerViewAdapter<Model extends BaseModel> extends R
                 setData( changedData );
             }
         } );
+
+        mAction = action;
     }
 
     @NonNull
@@ -72,13 +77,6 @@ public abstract class BaseRecyclerViewAdapter<Model extends BaseModel> extends R
         final Model data = mData.get( position );
 
         setViewHolderBindings( holder.mBinding, data );
-
-        holder.mBinding.getRoot().setOnClickListener( new View.OnClickListener() {
-            @Override
-            public void onClick( View v ) {
-                mOnItemClickEvent.postValue( data );
-            }
-        } );
     }
 
     @Override

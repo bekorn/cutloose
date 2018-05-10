@@ -13,6 +13,7 @@ import android.view.View;
 import com.cutloose.cutloose.R;
 import com.cutloose.cutloose.model.Chat;
 import com.cutloose.cutloose.ui.chat.ChatActivity;
+import com.cutloose.cutloose.ui.common.Action;
 import com.cutloose.cutloose.ui.common.BaseFragment;
 
 /**
@@ -45,14 +46,20 @@ public class MyChatsFragment extends BaseFragment {
 
         mChatsRecyclerViewAdapter = new MyChatsRecyclerViewAdapter( mChatsFragmentViewModel, this );
 
-        mChatsRecyclerViewAdapter.mOnItemClickEvent.observe( this, new Observer<Chat>() {
+        mChatsFragmentViewModel.getAction().observe( this, new Observer<Action<Chat>>() {
             @Override
-            public void onChanged( @Nullable Chat chat ) {
+            public void onChanged( @Nullable Action<Chat> chatAction ) {
 
-                Intent intent = new Intent( getContext(), ChatActivity.class );
-                intent.putExtra( "isProfile", true );
-                intent.putExtra( "owners", chat.showOwners() );
-                startActivity( intent );
+                if( chatAction == null ) return;
+
+                switch( chatAction.getActionType() ) {
+                    case RECYCLER_ITEM_CLICK:
+                        Intent intent = new Intent( getContext(), ChatActivity.class );
+                        intent.putExtra( "isProfile", true );
+                        intent.putExtra( "owners", chatAction.getModel().showOwners() );
+                        startActivity( intent );
+                        break;
+                }
             }
         } );
 

@@ -6,7 +6,7 @@
     <data>
         <variable
             name="viewModel"
-            type="com.cutloose.cutloose.ui.chat.ChatViewModel"/>
+            type="com.cutloose.cutloose.ui.chat.ChatFragmentRecyclerViewModel"/>
     </data>
 
     <android.support.constraint.ConstraintLayout

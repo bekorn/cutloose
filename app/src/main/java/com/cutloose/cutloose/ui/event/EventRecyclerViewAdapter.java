@@ -2,10 +2,13 @@ package com.cutloose.cutloose.ui.event;
 
 import android.arch.lifecycle.LifecycleOwner;
 import android.databinding.ViewDataBinding;
+import android.view.View;
 
 import com.cutloose.cutloose.BR;
 import com.cutloose.cutloose.R;
 import com.cutloose.cutloose.model.Event;
+import com.cutloose.cutloose.ui.common.Action;
+import com.cutloose.cutloose.ui.common.ActionType;
 import com.cutloose.cutloose.ui.common.RecyclerView.BaseRecyclerViewAdapter;
 import com.cutloose.cutloose.ui.common.RecyclerView.BaseRecyclerViewModel;
 
@@ -18,6 +21,13 @@ public class EventRecyclerViewAdapter extends BaseRecyclerViewAdapter<Event> {
     @Override
     protected void setViewHolderBindings( ViewDataBinding binding, Event event ) {
         binding.setVariable( BR.viewModel, new EventItemViewModel( event ) );
+
+        binding.getRoot().setOnClickListener( new View.OnClickListener() {
+            @Override
+            public void onClick( View v ) {
+                mAction.postValue( new Action<>( event, ActionType.RECYCLER_ITEM_CLICK ) );
+            }
+        } );
     }
 
     @Override

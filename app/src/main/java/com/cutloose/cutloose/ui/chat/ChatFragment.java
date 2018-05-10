@@ -3,56 +3,50 @@ package com.cutloose.cutloose.ui.chat;
 
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
-import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 
 import com.cutloose.cutloose.R;
 import com.cutloose.cutloose.databinding.ChatFragmentBinding;
 import com.cutloose.cutloose.model.Message;
+import com.cutloose.cutloose.ui.common.BaseFragment;
 
 import java.util.ArrayList;
 
-public class ChatFragment extends Fragment implements View.OnLayoutChangeListener {
+public class ChatFragment extends BaseFragment implements View.OnLayoutChangeListener {
 
-    private ChatFragmentBinding mChatFragmentBinding;
-    private ChatRecyclerViewAdapter mChatRecyclerViewAdapter;
-    private ChatViewModel mChatViewModel;
+    private ChatFragmentRecyclerViewAdapter mChatFragmentRecyclerViewAdapter;
+    private ChatFragmentRecyclerViewModel mChatFragmentRecyclerViewModel;
     private RecyclerView mRecyclerView;
 
     @Override
+    protected int getLayoutId() {
+        return R.layout.chat_fragment;
+    }
+
+    @Override
     public void onViewCreated( @NonNull View view, @Nullable Bundle savedInstanceState ) {
-        super.onViewCreated( view, savedInstanceState );
 
-        mChatViewModel = ViewModelProviders.of( this ).get( ChatViewModel.class );
-        mChatFragmentBinding.setViewModel( mChatViewModel );
+        mChatFragmentRecyclerViewModel = ViewModelProviders.of( this ).get( ChatFragmentRecyclerViewModel.class );
 
-        mChatRecyclerViewAdapter = new ChatRecyclerViewAdapter( mChatViewModel.getMessages(), this );
+        ((ChatFragmentBinding)mViewDataBinding).setViewModel( mChatFragmentRecyclerViewModel );
+
+        mChatFragmentRecyclerViewAdapter = new ChatFragmentRecyclerViewAdapter( mChatFragmentRecyclerViewModel,this );
 
         adaptRecyclerView( view );
 
-        mChatViewModel.getMessages().observe( this, new Observer<ArrayList<Message>>() {
+        mChatFragmentRecyclerViewModel.getLiveData().observe( this, new Observer<ArrayList<Message>>() {
             @Override
             public void onChanged( @Nullable ArrayList<Message> messages ) {
-                mRecyclerView.smoothScrollToPosition( mChatRecyclerViewAdapter.getItemCount() );
+                mRecyclerView.smoothScrollToPosition( mChatFragmentRecyclerViewAdapter.getItemCount() );
             }
         } );
 
-        mChatViewModel.fetchData(); //TODO: This should take in chat ID.
-    }
-
-    @Nullable
-    @Override
-    public View onCreateView( @NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState ) {
-        mChatFragmentBinding = DataBindingUtil.inflate( inflater, R.layout.chat_fragment, container, false );
-        return mChatFragmentBinding.getRoot();
+        mChatFragmentRecyclerViewModel.fetchData(); //TODO: This should take in chat ID.
     }
 
     private void adaptRecyclerView( View view ) {
@@ -60,7 +54,7 @@ public class ChatFragment extends Fragment implements View.OnLayoutChangeListene
         mRecyclerView.addOnLayoutChangeListener( this );
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager( getContext() );
         mRecyclerView.setLayoutManager( linearLayoutManager );
-        mRecyclerView.setAdapter( mChatRecyclerViewAdapter );
+        mRecyclerView.setAdapter( mChatFragmentRecyclerViewAdapter );
     }
 
     @Override
@@ -68,6 +62,6 @@ public class ChatFragment extends Fragment implements View.OnLayoutChangeListene
         /**
          * When keyboard opens, this makes chat scroll again to bottom.
          */
-        mRecyclerView.smoothScrollToPosition( mChatRecyclerViewAdapter.getItemCount() );
+        mRecyclerView.smoothScrollToPosition( mChatFragmentRecyclerViewAdapter.getItemCount() );
     }
 }

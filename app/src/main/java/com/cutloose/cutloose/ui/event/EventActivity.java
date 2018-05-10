@@ -14,6 +14,7 @@ import android.view.MenuItem;
 import com.cutloose.cutloose.R;
 import com.cutloose.cutloose.model.Event;
 import com.cutloose.cutloose.ui.chat.ChatActivity;
+import com.cutloose.cutloose.ui.common.Action;
 import com.cutloose.cutloose.ui.common.BaseActivity;
 import com.cutloose.cutloose.ui.profile.ProfileActivity;
 
@@ -36,11 +37,17 @@ public class EventActivity extends BaseActivity {
 
         EventRecyclerViewAdapter eventRecyclerViewAdapter = new EventRecyclerViewAdapter( eventRecyclerViewModel, this );
 
-        eventRecyclerViewAdapter.mOnItemClickEvent.observe( this, new Observer<Event>() {
+        eventRecyclerViewModel.getAction().observe( this, new Observer<Action<Event>>() {
             @Override
-            public void onChanged( @Nullable Event event ) {
-                Intent intent = new Intent( EventActivity.this, ChatActivity.class );
-                startActivity( intent );
+            public void onChanged( @Nullable Action<Event> eventAction ) {
+
+                if( eventAction == null ) return;
+
+                switch( eventAction.getActionType() ) {
+                    case RECYCLER_ITEM_CLICK:
+                        Intent intent = new Intent( EventActivity.this, ChatActivity.class );
+                        startActivity( intent );
+                }
             }
         } );
 

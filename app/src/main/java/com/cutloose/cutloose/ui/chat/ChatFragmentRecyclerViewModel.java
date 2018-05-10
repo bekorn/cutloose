@@ -1,23 +1,23 @@
 package com.cutloose.cutloose.ui.chat;
 
-import android.arch.lifecycle.MutableLiveData;
 import android.databinding.ObservableField;
 
 import com.cutloose.cutloose.model.Message;
 import com.cutloose.cutloose.repository.ChatRepository;
-import com.cutloose.cutloose.ui.common.BaseViewModel;
+import com.cutloose.cutloose.ui.common.RecyclerView.BaseRecyclerViewModel;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 
-public class ChatViewModel extends BaseViewModel {
-    private MutableLiveData<ArrayList<Message>> messages = new MutableLiveData<>();
+public class ChatFragmentRecyclerViewModel extends BaseRecyclerViewModel <Message> {
+
     public ObservableField<String> messageInputContent = new ObservableField<>();
 
+    @Override
     public void fetchData() {
         ChatRepository chatRepository = ChatRepository.getInstance();
         //TODO: Request the messages by a real ID
-        chatRepository.getChatMessages( null, messages );
+        chatRepository.getChatMessages( null, mData );
     }
 
     public void onMessageSendButtonClicked() {
@@ -29,19 +29,11 @@ public class ChatViewModel extends BaseViewModel {
         message.setUserId( "0" ); //TODO: This id must be real user ID.
 
         //TODO: Send this new message to the firebase database.
-        ArrayList<Message> messageArrayList = messages.getValue();
+        ArrayList<Message> messageArrayList = mData.getValue();
         messageArrayList.add( message );
-        messages.setValue( messageArrayList );
+        mData.setValue( messageArrayList );
 
         messageInputContent.set( "" );
-    }
-
-    public MutableLiveData<ArrayList<Message>> getMessages() {
-        return messages;
-    }
-
-    public void setMessages( MutableLiveData<ArrayList<Message>> messages ) {
-        this.messages = messages;
     }
 
     public ObservableField<String> getMessageInputContent() {
