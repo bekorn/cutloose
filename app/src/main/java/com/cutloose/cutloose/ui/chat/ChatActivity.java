@@ -15,6 +15,11 @@ public class ChatActivity extends BaseActivity {
     ChatActivityViewModel mChatActivityViewModel;
 
     @Override
+    protected int getLayoutId() {
+        return R.layout.chat_activity;
+    }
+
+    @Override
     public void onCreate( @Nullable Bundle savedInstanceState ) {
         super.onCreate( savedInstanceState );
 
@@ -26,10 +31,10 @@ public class ChatActivity extends BaseActivity {
         boolean isProfile = getIntent().getBooleanExtra( "isProfile", false );
 
         if( isProfile ) {
-            mChatActivityViewModel.searching.set( false );
+            mChatActivityViewModel.mSearching.set( false );
             setTitle( getIntent().getStringExtra( "owners" ) );
         } else {
-            mChatActivityViewModel.searching.set( true );
+            mChatActivityViewModel.mSearching.set( true );
             setFakeTimer();
         }
     }
@@ -41,14 +46,9 @@ public class ChatActivity extends BaseActivity {
             }
 
             public void onFinish() {
-                mChatActivityViewModel.searching.set( false );
+                mChatActivityViewModel.mSearching.set( false );
             }
 
         }.start();
-    }
-
-    @Override
-    protected int getLayoutId() {
-        return R.layout.chat_activity;
     }
 }

@@ -35,8 +35,6 @@ public class ChatFragment extends BaseFragment implements View.OnLayoutChangeLis
 
         ((ChatFragmentBinding)mViewDataBinding).setViewModel( mChatFragmentRecyclerViewModel );
 
-        mChatFragmentRecyclerViewAdapter = new ChatFragmentRecyclerViewAdapter( mChatFragmentRecyclerViewModel,this );
-
         adaptRecyclerView( view );
 
         mChatFragmentRecyclerViewModel.getLiveData().observe( this, new Observer<ArrayList<Message>>() {
@@ -51,9 +49,13 @@ public class ChatFragment extends BaseFragment implements View.OnLayoutChangeLis
 
     private void adaptRecyclerView( View view ) {
         mRecyclerView = view.findViewById( R.id.chat_recycler );
+
         mRecyclerView.addOnLayoutChangeListener( this );
+
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager( getContext() );
         mRecyclerView.setLayoutManager( linearLayoutManager );
+
+        mChatFragmentRecyclerViewAdapter = new ChatFragmentRecyclerViewAdapter( mChatFragmentRecyclerViewModel,this );
         mRecyclerView.setAdapter( mChatFragmentRecyclerViewAdapter );
     }
 

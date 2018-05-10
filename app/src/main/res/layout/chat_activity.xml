@@ -18,7 +18,7 @@
             android:layout_height="match_parent"
             android:orientation="vertical"
             android:gravity="center"
-            android:visibility="@{viewModel.searching ? View.VISIBLE : View.GONE}">
+            android:visibility="@{viewModel.mSearching ? View.VISIBLE : View.GONE}">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -35,7 +35,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:visibility="@{viewModel.searching ? View.GONE : View.VISIBLE}">
+            android:visibility="@{viewModel.mSearching ? View.GONE : View.VISIBLE}">
             <fragment
                 android:id="@+id/fragment"
                 android:name="com.cutloose.cutloose.ui.chat.ChatFragment"

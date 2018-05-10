@@ -4,14 +4,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.content.ContextCompat;
-import android.text.method.LinkMovementMethod;
 import android.view.View;
-import android.view.WindowManager;
-import android.widget.TextView;
 
 import com.cutloose.cutloose.R;
-import com.cutloose.cutloose.ui.chat.ChatActivity;
 import com.cutloose.cutloose.ui.common.BaseActivity;
 import com.cutloose.cutloose.ui.event.EventActivity;
 
