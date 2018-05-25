@@ -7,8 +7,8 @@ import android.view.View;
 import com.cutloose.cutloose.R;
 import com.cutloose.cutloose.BR;
 import com.cutloose.cutloose.model.Chat;
-import com.cutloose.cutloose.ui.common.Action;
-import com.cutloose.cutloose.ui.common.ActionType;
+import com.cutloose.cutloose.ui.common.Action.Action;
+import com.cutloose.cutloose.ui.common.Action.BasicAction;
 import com.cutloose.cutloose.ui.common.RecyclerView.BaseRecyclerViewAdapter;
 import com.cutloose.cutloose.ui.common.RecyclerView.BaseRecyclerViewModel;
 
@@ -16,9 +16,9 @@ import com.cutloose.cutloose.ui.common.RecyclerView.BaseRecyclerViewModel;
  * Created by finge on 5/6/2018.
  */
 
-class MyChatsRecyclerViewAdapter extends BaseRecyclerViewAdapter<Chat> {
+class MyChatsRecyclerViewAdapter extends BaseRecyclerViewAdapter<Chat, BasicAction> {
 
-    public MyChatsRecyclerViewAdapter( BaseRecyclerViewModel<Chat> baseRecyclerViewModel, LifecycleOwner lifecycleOwner ) {
+    public MyChatsRecyclerViewAdapter( BaseRecyclerViewModel<Chat, BasicAction> baseRecyclerViewModel, LifecycleOwner lifecycleOwner ) {
         super( baseRecyclerViewModel, lifecycleOwner );
     }
 
@@ -29,7 +29,7 @@ class MyChatsRecyclerViewAdapter extends BaseRecyclerViewAdapter<Chat> {
         binding.getRoot().setOnClickListener( new View.OnClickListener() {
             @Override
             public void onClick( View v ) {
-                mAction.postValue( new Action<>( chat, ActionType.RECYCLER_ITEM_CLICK ) );
+                mViewModel.setAction( new Action<>( chat, BasicAction.RECYCLER_ITEM_CLICK ) );
             }
         } );
     }
@@ -38,6 +38,4 @@ class MyChatsRecyclerViewAdapter extends BaseRecyclerViewAdapter<Chat> {
     protected int getItemViewId() {
         return R.layout.my_chats_item;
     }
-
-
 }

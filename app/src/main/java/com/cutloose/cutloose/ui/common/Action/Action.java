@@ -1,8 +1,8 @@
-package com.cutloose.cutloose.ui.common;
+package com.cutloose.cutloose.ui.common.Action;
 
 import com.cutloose.cutloose.model.BaseModel;
 
-public class Action<Model extends BaseModel> {
+public class Action<Model extends BaseModel, ActionType> {
 
     private Model mModel;
     private ActionType mActionType;

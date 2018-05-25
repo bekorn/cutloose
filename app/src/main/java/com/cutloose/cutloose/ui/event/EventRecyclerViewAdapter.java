@@ -7,14 +7,14 @@ import android.view.View;
 import com.cutloose.cutloose.BR;
 import com.cutloose.cutloose.R;
 import com.cutloose.cutloose.model.Event;
-import com.cutloose.cutloose.ui.common.Action;
-import com.cutloose.cutloose.ui.common.ActionType;
+import com.cutloose.cutloose.ui.common.Action.Action;
+import com.cutloose.cutloose.ui.common.Action.BasicAction;
 import com.cutloose.cutloose.ui.common.RecyclerView.BaseRecyclerViewAdapter;
 import com.cutloose.cutloose.ui.common.RecyclerView.BaseRecyclerViewModel;
 
-public class EventRecyclerViewAdapter extends BaseRecyclerViewAdapter<Event> {
+public class EventRecyclerViewAdapter extends BaseRecyclerViewAdapter<Event, BasicAction> {
 
-    public EventRecyclerViewAdapter( BaseRecyclerViewModel<Event> baseRecyclerViewModel, LifecycleOwner lifecycleOwner ) {
+    public EventRecyclerViewAdapter( BaseRecyclerViewModel<Event, BasicAction> baseRecyclerViewModel, LifecycleOwner lifecycleOwner ) {
         super( baseRecyclerViewModel, lifecycleOwner );
     }
 
@@ -25,7 +25,7 @@ public class EventRecyclerViewAdapter extends BaseRecyclerViewAdapter<Event> {
         binding.getRoot().setOnClickListener( new View.OnClickListener() {
             @Override
             public void onClick( View v ) {
-                mAction.postValue( new Action<>( event, ActionType.RECYCLER_ITEM_CLICK ) );
+                mViewModel.setAction( new Action<>( event, BasicAction.RECYCLER_ITEM_CLICK ) );
             }
         } );
     }

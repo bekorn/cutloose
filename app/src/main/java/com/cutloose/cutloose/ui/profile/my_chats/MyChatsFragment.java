@@ -13,7 +13,8 @@ import android.view.View;
 import com.cutloose.cutloose.R;
 import com.cutloose.cutloose.model.Chat;
 import com.cutloose.cutloose.ui.chat.ChatActivity;
-import com.cutloose.cutloose.ui.common.Action;
+import com.cutloose.cutloose.ui.common.Action.Action;
+import com.cutloose.cutloose.ui.common.Action.BasicAction;
 import com.cutloose.cutloose.ui.common.BaseFragment;
 
 /**
@@ -46,9 +47,9 @@ public class MyChatsFragment extends BaseFragment {
 
         mChatsRecyclerViewAdapter = new MyChatsRecyclerViewAdapter( mChatsFragmentViewModel, this );
 
-        mChatsFragmentViewModel.getAction().observe( this, new Observer<Action<Chat>>() {
+        mChatsFragmentViewModel.observeAction( this, new Observer<Action<Chat, BasicAction>>() {
             @Override
-            public void onChanged( @Nullable Action<Chat> chatAction ) {
+            public void onChanged( @Nullable Action<Chat, BasicAction> chatAction ) {
 
                 if( chatAction == null ) return;
 

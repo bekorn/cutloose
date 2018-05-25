@@ -14,7 +14,8 @@ import android.view.MenuItem;
 import com.cutloose.cutloose.R;
 import com.cutloose.cutloose.model.Event;
 import com.cutloose.cutloose.ui.chat.ChatActivity;
-import com.cutloose.cutloose.ui.common.Action;
+import com.cutloose.cutloose.ui.common.Action.Action;
+import com.cutloose.cutloose.ui.common.Action.BasicAction;
 import com.cutloose.cutloose.ui.common.BaseActivity;
 import com.cutloose.cutloose.ui.profile.ProfileActivity;
 
@@ -37,9 +38,9 @@ public class EventActivity extends BaseActivity {
 
         EventRecyclerViewAdapter eventRecyclerViewAdapter = new EventRecyclerViewAdapter( eventRecyclerViewModel, this );
 
-        eventRecyclerViewModel.getAction().observe( this, new Observer<Action<Event>>() {
+        eventRecyclerViewModel.observeAction( this, new Observer<Action<Event, BasicAction>>() {
             @Override
-            public void onChanged( @Nullable Action<Event> eventAction ) {
+            public void onChanged( @Nullable Action<Event, BasicAction> eventAction ) {
 
                 if( eventAction == null ) return;
 

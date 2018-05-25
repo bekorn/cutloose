@@ -14,11 +14,12 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.cutloose.cutloose.model.BaseModel;
-import com.cutloose.cutloose.ui.common.Action;
+import com.cutloose.cutloose.ui.common.Action.Action;
+import com.cutloose.cutloose.ui.common.BaseViewModel;
 
 import java.util.ArrayList;
 
-public abstract class BaseRecyclerViewAdapter<Model extends BaseModel> extends RecyclerView.Adapter<BaseRecyclerViewAdapter.ViewHolder> {
+public abstract class BaseRecyclerViewAdapter<Model extends BaseModel, ActionType> extends RecyclerView.Adapter<BaseRecyclerViewAdapter.ViewHolder> {
 
     class ViewHolder extends RecyclerView.ViewHolder {
 
@@ -32,18 +33,18 @@ public abstract class BaseRecyclerViewAdapter<Model extends BaseModel> extends R
     }
 
     protected final ArrayList<Model> mData = new ArrayList<>();
-    protected final MutableLiveData<Action<Model>> mAction;
+    protected final BaseViewModel<Model, ActionType> mViewModel;
 
     protected abstract void setViewHolderBindings( ViewDataBinding binding, Model model );
 
     protected abstract int getItemViewId();
 
-    public BaseRecyclerViewAdapter( BaseRecyclerViewModel<Model> baseRecyclerViewModel, LifecycleOwner lifecycleOwner ) {
-        this( baseRecyclerViewModel.getLiveData(), baseRecyclerViewModel.getAction(), lifecycleOwner );
+    public BaseRecyclerViewAdapter( BaseRecyclerViewModel<Model, ActionType> baseRecyclerViewModel, LifecycleOwner lifecycleOwner ) {
+        this( baseRecyclerViewModel.getLiveData(), baseRecyclerViewModel, lifecycleOwner );
     }
 
     public BaseRecyclerViewAdapter( MutableLiveData<ArrayList<Model>> observableData,
-                                    MutableLiveData<Action<Model>> action,
+                                    BaseViewModel<Model, ActionType> viewModel,
                                     LifecycleOwner lifecycleOwner ) {
         super();
 
@@ -54,7 +55,7 @@ public abstract class BaseRecyclerViewAdapter<Model extends BaseModel> extends R
             }
         } );
 
-        mAction = action;
+        mViewModel = viewModel;
     }
 
     @NonNull
@@ -74,9 +75,7 @@ public abstract class BaseRecyclerViewAdapter<Model extends BaseModel> extends R
     @Override
     public void onBindViewHolder( @NonNull BaseRecyclerViewAdapter.ViewHolder holder, int position ) {
 
-        final Model data = mData.get( position );
-
-        setViewHolderBindings( holder.mBinding, data );
+        setViewHolderBindings( holder.mBinding, mData.get( position ) );
     }
 
     @Override

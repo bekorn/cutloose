@@ -4,12 +4,13 @@ import android.databinding.ObservableField;
 
 import com.cutloose.cutloose.model.Message;
 import com.cutloose.cutloose.repository.ChatRepository;
+import com.cutloose.cutloose.ui.common.Action.BasicAction;
 import com.cutloose.cutloose.ui.common.RecyclerView.BaseRecyclerViewModel;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 
-public class ChatFragmentRecyclerViewModel extends BaseRecyclerViewModel <Message> {
+public class ChatFragmentRecyclerViewModel extends BaseRecyclerViewModel <Message, BasicAction> {
 
     public ObservableField<String> messageInputContent = new ObservableField<>();
 

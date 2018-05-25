@@ -7,7 +7,7 @@ import com.cutloose.cutloose.ui.common.BaseViewModel;
 
 import java.util.ArrayList;
 
-public abstract class BaseRecyclerViewModel<Model extends BaseModel> extends BaseViewModel<Model> {
+public abstract class BaseRecyclerViewModel<Model extends BaseModel, ActionType> extends BaseViewModel<Model, ActionType> {
 
     protected MutableLiveData<ArrayList<Model>> mData = new MutableLiveData<>();
 
