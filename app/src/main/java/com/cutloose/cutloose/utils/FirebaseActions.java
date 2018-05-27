@@ -49,6 +49,18 @@ public class FirebaseActions {
                 .get();
     }
 
+    public Task getActiveness(String eventId) {
+        long tenMinutesAgo = System.currentTimeMillis() - 1000 * 60 * 10;
+
+        return firestore
+                .collection("events")
+                .document(eventId)
+                .collection("lobbies")
+                .whereGreaterThan("createdAt", tenMinutesAgo)
+                .orderBy("createdAt", Query.Direction.DESCENDING)
+                .get();
+    }
+
     public String createLobby(String eventId, Chat c) {
         DocumentReference dr = firestore
                 .collection("events")

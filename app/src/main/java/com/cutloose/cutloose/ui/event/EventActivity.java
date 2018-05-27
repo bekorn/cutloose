@@ -4,6 +4,7 @@ import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -21,7 +22,11 @@ import com.cutloose.cutloose.ui.common.Action.Action;
 import com.cutloose.cutloose.ui.common.Action.BasicAction;
 import com.cutloose.cutloose.ui.common.BaseActivity;
 import com.cutloose.cutloose.ui.profile.ProfileActivity;
+import com.cutloose.cutloose.utils.FirebaseActions;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -30,7 +35,7 @@ import java.util.Comparator;
 public class EventActivity extends BaseActivity {
 
     static private final String TAG = "EventActivity";
-
+    EventRecyclerViewModel eventRecyclerViewModel;
     @Override
     protected int getLayoutId() {
         return R.layout.event_activity;
@@ -42,7 +47,7 @@ public class EventActivity extends BaseActivity {
 
         setTitle( R.string.event_title );
 
-        EventRecyclerViewModel eventRecyclerViewModel = ViewModelProviders.of( this ).get( EventRecyclerViewModel.class );
+        eventRecyclerViewModel = ViewModelProviders.of( this ).get( EventRecyclerViewModel.class );
 
         EventRecyclerViewAdapter eventRecyclerViewAdapter = new EventRecyclerViewAdapter( eventRecyclerViewModel, this );
 
@@ -87,14 +92,15 @@ public class EventActivity extends BaseActivity {
 
                 for(Event event : events) {
                     event.setPopularity(((CutLoose)(getApplication())).getDatabase().clicksDao().getCount(event.getEventId(), FirebaseAuth.getInstance().getUid()));
+                    FirebaseActions.getInstance().getActiveness(event.getEventId()).addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                            if(task.isSuccessful()) {
+                                event.setActiveEventsCount(task.getResult().size());
+                            }
+                        }
+                    });
                 }
-
-                Collections.sort(events, new Comparator<Event>() {
-                    @Override
-                    public int compare(Event event, Event t1) {
-                        return Integer.compare(event.getPopularity(), t1.getPopularity()) * -1;
-                    }
-                });
             }
         });
     }
@@ -111,6 +117,9 @@ public class EventActivity extends BaseActivity {
         switch( item.getItemId() ) {
             case R.id.menu_profile:
                 startProfileActivity();
+                return true;
+            case R.id.refresh:
+                eventRecyclerViewModel.fetchData();
                 return true;
             default:
                 return super.onOptionsItemSelected( item );

@@ -81,10 +81,18 @@ public class ChatFragment extends BaseFragment implements View.OnLayoutChangeLis
     }
 
     @Override
-    public void onLayoutChange( View view, int i, int i1, int i2, int i3, int i4, int i5, int i6, int i7 ) {
+    public void onLayoutChange( View view, int left, int top, int right, int bottom,
+                                int oldLeft, int oldTop, int oldRight, int oldBottom ) {
         /**
          * When keyboard opens, this makes chat scroll again to bottom.
          */
-        mRecyclerView.smoothScrollToPosition( mChatFragmentRecyclerViewAdapter.getItemCount() );
+        if ( bottom < oldBottom) {
+            mRecyclerView.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    mRecyclerView.smoothScrollToPosition(mChatFragmentRecyclerViewAdapter.getItemCount());
+                }
+            }, 100);
+        }
     }
 }
