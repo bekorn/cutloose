@@ -26,6 +26,7 @@ public class EventRecyclerViewAdapter extends BaseRecyclerViewAdapter<Event, Bas
             @Override
             public void onClick(View v) {
                 mViewModel.setAction(new Action<>(event, BasicAction.RECYCLER_ITEM_CLICK));
+                mViewModel.setAction(null);
             }
         });
     }

@@ -30,6 +30,7 @@ class MyChatsRecyclerViewAdapter extends BaseRecyclerViewAdapter<Chat, BasicActi
             @Override
             public void onClick(View v) {
                 mViewModel.setAction(new Action<>(chat, BasicAction.RECYCLER_ITEM_CLICK));
+                mViewModel.setAction(null);
             }
         });
     }
