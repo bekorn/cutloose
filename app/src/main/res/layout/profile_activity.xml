@@ -1,57 +1,66 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:tools="http://schemas.android.com/tools"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
     <data>
+
         <variable
             name="viewModel"
-            type="com.cutloose.cutloose.ui.profile.ProfileViewModel"/>
+            type="com.cutloose.cutloose.ui.profile.ProfileViewModel" />
+
         <variable
             name="profile"
-            type="com.cutloose.cutloose.model.Profile"/>
+            type="com.cutloose.cutloose.model.Profile" />
     </data>
 
-    <LinearLayout
-        android:orientation="vertical" android:layout_width="match_parent"
+    <ScrollView
+        android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <ImageView
-            android:layout_width="200dp"
-            android:layout_height="200dp"
-            android:layout_margin="20dp"
-            android:layout_gravity="center_horizontal"
-            app:imageUrl="@{viewModel.profile.photoPath}"
-            />
-        <TextView
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:textSize="30sp"
-            android:layout_margin="10dp"
-            android:text="@{viewModel.profile.name}"/>
+            android:orientation="vertical">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/my_chats"
-            android:textSize="24sp"
-            android:layout_marginLeft="10dp"/>
+            <ImageView
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_margin="20dp"
+                app:imageUrl="@{viewModel.profile.photoPath}" />
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginTop="3dp"
-            android:layout_marginBottom="3dp"
-            android:background="@android:color/darker_gray"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:gravity="center"
+                android:text="@{viewModel.profile.name}"
+                android:textSize="30sp" />
 
-        <fragment
-            android:id="@+id/fragment2"
-            android:name="com.cutloose.cutloose.ui.profile.my_chats.MyChatsFragment"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            tools:layout="@layout/my_chats_fragment" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:text="@string/my_chats"
+                android:textSize="24sp" />
 
-    </LinearLayout>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginBottom="3dp"
+                android:layout_marginTop="3dp"
+                android:background="@android:color/darker_gray" />
 
+            <fragment
+                android:id="@+id/fragment2"
+                android:name="com.cutloose.cutloose.ui.profile.my_chats.MyChatsFragment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:layout="@layout/my_chats_fragment" />
+
+        </LinearLayout>
+
+    </ScrollView>
 
 </layout>
