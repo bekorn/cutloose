@@ -38,6 +38,12 @@ public class LoginActivity extends BaseActivity {
     }
 
     public void logIn(View v){
+        if(loginViewModel.email.get() == null || loginViewModel.email.get().equals("")
+                || loginViewModel.password.get() == null || loginViewModel.password.get().equals("")) {
+            loginViewModel.errorExists.set(true);
+            loginViewModel.errorMessage.set("Fill all the fields!");
+            return;
+        }
         loginViewModel.login().addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
@@ -51,6 +57,14 @@ public class LoginActivity extends BaseActivity {
     public void register(View v) {
         if(!loginViewModel.registerMode.get()) {
             loginViewModel.registerMode.set(true);
+            return;
+        }
+        if(loginViewModel.email.get() == null || loginViewModel.email.get().equals("")
+                || loginViewModel.password.get() == null || loginViewModel.password.get().equals("")
+                || loginViewModel.profilePicture.get() == null || loginViewModel.profilePicture.get().equals("")
+                || loginViewModel.username.get() == null || loginViewModel.username.get().equals("")) {
+            loginViewModel.errorExists.set(true);
+            loginViewModel.errorMessage.set("Fill all the fields!");
             return;
         }
         loginViewModel.register().addOnCompleteListener(new OnCompleteListener<AuthResult>() {

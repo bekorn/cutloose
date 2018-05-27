@@ -33,6 +33,8 @@ public class ChatFragmentRecyclerViewModel extends BaseRecyclerViewModel <Messag
     public void onMessageSendButtonClicked() {
         String messageText = messageInputContent.get();
 
+        if(messageText == null ||messageText.equals("")) return;
+
         Message message = new Message();
         message.setUserName(FirebaseActions.getInstance().getProfile().getName());
         message.setContent( messageText );

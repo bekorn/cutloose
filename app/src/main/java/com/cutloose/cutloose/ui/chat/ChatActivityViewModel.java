@@ -76,7 +76,18 @@ public class ChatActivityViewModel extends BaseViewModel {
                  }
                  ArrayList<Profile> usrs = chatUsers.getValue() == null ? new ArrayList<>() : chatUsers.getValue();
                  for (DocumentChange doc : queryDocumentSnapshots.getDocumentChanges()) {
-                     usrs.add((doc.getDocument().toObject(Profile.class)));
+
+                     Profile profile = (doc.getDocument().toObject(Profile.class));
+                     boolean add = true;
+
+                     for(int i = 0; i < usrs.size(); i++) {
+                         if(profile.getId().equals(usrs.get(i).getId())) {
+                             add = false;
+                             break;
+                         }
+                     }
+
+                     if(add) usrs.add(profile);
                  }
                  chatUsers.setValue(usrs);
             }

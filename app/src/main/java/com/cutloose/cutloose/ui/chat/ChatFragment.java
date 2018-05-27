@@ -42,6 +42,7 @@ public class ChatFragment extends BaseFragment implements View.OnLayoutChangeLis
         mChatFragmentRecyclerViewModel.getLiveData().observe( this, new Observer<ArrayList<Message>>() {
             @Override
             public void onChanged( @Nullable ArrayList<Message> messages ) {
+                if(messages == null || messages.size() == 0) return;
                 mRecyclerView.smoothScrollToPosition( mChatFragmentRecyclerViewAdapter.getItemCount() );
             }
         } );
