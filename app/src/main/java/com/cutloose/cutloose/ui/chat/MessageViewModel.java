@@ -11,12 +11,12 @@ public class MessageViewModel extends ViewModel {
     private Message message;
     private Boolean owned;
 
-    public MessageViewModel( Message message ) {
+    public MessageViewModel(Message message) {
         this.message = message;
     }
 
     public boolean checkOwnership() {
-        if(owned != null) return owned;
+        if (owned != null) return owned;
 
         owned = message.getUserId().equals(FirebaseAuth.getInstance().getUid());
 

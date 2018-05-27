@@ -5,7 +5,6 @@ import android.arch.lifecycle.MutableLiveData;
 import com.cutloose.cutloose.model.Profile;
 import com.cutloose.cutloose.ui.common.Action.Action;
 import com.cutloose.cutloose.ui.common.Action.BasicAction;
-import com.cutloose.cutloose.ui.common.BaseViewModel;
 import com.cutloose.cutloose.ui.common.RecyclerView.BaseRecyclerViewModel;
 
 import java.util.ArrayList;

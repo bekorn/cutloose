@@ -7,7 +7,7 @@ public class Action<Model extends BaseModel, ActionType> {
     private Model mModel;
     private ActionType mActionType;
 
-    public Action( Model model, ActionType actionType ) {
+    public Action(Model model, ActionType actionType) {
         mModel = model;
         mActionType = actionType;
     }

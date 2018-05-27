@@ -28,21 +28,21 @@ public class ChatActivity extends BaseActivity {
     }
 
     @Override
-    public void onCreate( @Nullable Bundle savedInstanceState ) {
-        super.onCreate( savedInstanceState );
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
 
         chatFragment = (ChatFragment) getSupportFragmentManager().findFragmentById(R.id.chat_fragment);
         chatUsersFragment = (ChatUsersFragment) getSupportFragmentManager().findFragmentById(R.id.chat_users_fragment);
 
-        mChatActivityViewModel = ViewModelProviders.of( this ).get( ChatActivityViewModel.class );
+        mChatActivityViewModel = ViewModelProviders.of(this).get(ChatActivityViewModel.class);
 
         mChatActivityBinding = (ChatActivityBinding) mViewDataBinding;
-        mChatActivityBinding.setViewModel( mChatActivityViewModel );
+        mChatActivityBinding.setViewModel(mChatActivityViewModel);
 
         Event event = getIntent().getParcelableExtra("event");
         setTitle(event.getName());
 
-        if(getIntent().getStringExtra("chatId") != null) {
+        if (getIntent().getStringExtra("chatId") != null) {
             String chatId = getIntent().getStringExtra("chatId");
             chatFragment.fetchData(event.getEventId(), chatId);
             mChatActivityViewModel.listenJoiningUsers(event.getEventId(), chatId);
@@ -69,10 +69,10 @@ public class ChatActivity extends BaseActivity {
         mChatActivityViewModel.observeAction(this, new Observer<Action>() {
             @Override
             public void onChanged(@Nullable Action action) {
-                if(action == null) return;
+                if (action == null) return;
 
-                if(action.getActionType() instanceof LobbyAction) {
-                    switch ((LobbyAction)(action.getActionType())) {
+                if (action.getActionType() instanceof LobbyAction) {
+                    switch ((LobbyAction) (action.getActionType())) {
                         case ON_CHAT_FOUND:
                             chatFragment.fetchData(mChatActivityViewModel.getCurrentChat().getEventId(), mChatActivityViewModel.getCurrentChat().getId());
                             observeChatUsersChange();

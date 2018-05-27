@@ -1,10 +1,8 @@
 package com.cutloose.cutloose.utils;
 
 import android.support.annotation.NonNull;
-import android.widget.ProgressBar;
 
 import com.cutloose.cutloose.model.Chat;
-import com.cutloose.cutloose.model.Event;
 import com.cutloose.cutloose.model.Message;
 import com.cutloose.cutloose.model.Profile;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -26,7 +24,7 @@ public class FirebaseActions {
     }
 
     public static FirebaseActions getInstance() {
-        if(instance == null) instance = new FirebaseActions();
+        if (instance == null) instance = new FirebaseActions();
         return instance;
     }
 
@@ -136,12 +134,12 @@ public class FirebaseActions {
 
     public void loadProfile() {
         firestore
-            .collection("users")
-            .document(FirebaseAuth.getInstance().getUid())
-            .get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                .collection("users")
+                .document(FirebaseAuth.getInstance().getUid())
+                .get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                if(task.isSuccessful()) {
+                if (task.isSuccessful()) {
                     profile = task.getResult().toObject(Profile.class);
                 }
             }
@@ -154,13 +152,13 @@ public class FirebaseActions {
         profile.setPhotoPath(profilePictureURL);
         profile.setName(name);
         firestore
-            .collection("users")
-            .document(FirebaseAuth.getInstance().getUid())
-            .set(profile)
+                .collection("users")
+                .document(FirebaseAuth.getInstance().getUid())
+                .set(profile)
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
-                        if(task.isSuccessful()) {
+                        if (task.isSuccessful()) {
                             loadProfile();
                         }
                     }

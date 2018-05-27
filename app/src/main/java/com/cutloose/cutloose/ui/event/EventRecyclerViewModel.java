@@ -1,6 +1,5 @@
 package com.cutloose.cutloose.ui.event;
 
-import android.arch.lifecycle.MutableLiveData;
 import android.databinding.ObservableBoolean;
 
 import com.cutloose.cutloose.model.Event;

@@ -38,35 +38,35 @@ public class MyChatsFragment extends BaseFragment {
 
         mChatsFragmentViewModel.fetchData();
 
-        adaptRecyclerView( view );
+        adaptRecyclerView(view);
     }
 
     private void adaptRecyclerView(View view) {
 
         recyclerView = view.findViewById(R.id.my_chat_recycler);
 
-        mChatsRecyclerViewAdapter = new MyChatsRecyclerViewAdapter( mChatsFragmentViewModel, this );
+        mChatsRecyclerViewAdapter = new MyChatsRecyclerViewAdapter(mChatsFragmentViewModel, this);
 
-        mChatsFragmentViewModel.observeAction( this, new Observer<Action<Chat, BasicAction>>() {
+        mChatsFragmentViewModel.observeAction(this, new Observer<Action<Chat, BasicAction>>() {
             @Override
-            public void onChanged( @Nullable Action<Chat, BasicAction> chatAction ) {
+            public void onChanged(@Nullable Action<Chat, BasicAction> chatAction) {
 
-                if( chatAction == null ) return;
+                if (chatAction == null) return;
 
-                switch( chatAction.getActionType() ) {
+                switch (chatAction.getActionType()) {
                     case RECYCLER_ITEM_CLICK:
-                        Intent intent = new Intent( getContext(), ChatActivity.class );
+                        Intent intent = new Intent(getContext(), ChatActivity.class);
                         intent.putExtra("event", chatAction.getModel().getEventType());
-                        intent.putExtra( "chatId", chatAction.getModel().getId() );
-                        intent.putExtra( "eventId", chatAction.getModel().getEventId() );
-                        intent.putExtra( "owners", chatAction.getModel().getOwners() );
-                        startActivity( intent );
+                        intent.putExtra("chatId", chatAction.getModel().getId());
+                        intent.putExtra("eventId", chatAction.getModel().getEventId());
+                        intent.putExtra("owners", chatAction.getModel().getOwners());
+                        startActivity(intent);
                         break;
                 }
             }
-        } );
+        });
 
-        recyclerView.setAdapter( mChatsRecyclerViewAdapter );
+        recyclerView.setAdapter(mChatsRecyclerViewAdapter);
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(linearLayoutManager);

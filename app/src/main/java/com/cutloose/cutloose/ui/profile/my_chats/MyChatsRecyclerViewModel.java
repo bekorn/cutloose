@@ -11,6 +11,6 @@ public class MyChatsRecyclerViewModel extends BaseRecyclerViewModel<Chat, BasicA
     @Override
     public void fetchData() {
         ChatRepository chatRepository = ChatRepository.getInstance();
-        chatRepository.getChats( mData );
+        chatRepository.getChats(mData);
     }
 }

@@ -8,7 +8,7 @@ public class EventItemViewModel extends BaseViewModel {
 
     public Event mEvent;
 
-    public EventItemViewModel( Event event ) {
+    public EventItemViewModel(Event event) {
         super();
 
         mEvent = event;

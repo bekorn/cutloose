@@ -9,9 +9,10 @@ import com.cutloose.cutloose.ui.common.BaseViewModel;
 public class ProfileViewModel extends BaseViewModel {
     private MutableLiveData<Profile> profile = new MutableLiveData<>();
 
-    public void fetchData(){
+    public void fetchData() {
         ProfileRepository.getInstance().setUserProfile(profile);
     }
+
     public Profile getProfile() {
         return profile.getValue();
     }

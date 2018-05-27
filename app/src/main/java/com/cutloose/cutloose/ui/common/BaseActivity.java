@@ -15,11 +15,11 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected abstract int getLayoutId();
 
     @Override
-    public void onCreate( @Nullable Bundle savedInstanceState ) {
-        super.onCreate( savedInstanceState );
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
 
-        mViewDataBinding = DataBindingUtil.setContentView( this, getLayoutId() );
+        mViewDataBinding = DataBindingUtil.setContentView(this, getLayoutId());
 
-        Log.d( TAG, "Created -> " + getResources().getResourceName( getLayoutId() ) );
+        Log.d(TAG, "Created -> " + getResources().getResourceName(getLayoutId()));
     }
 }

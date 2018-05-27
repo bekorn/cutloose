@@ -12,13 +12,13 @@ import com.cutloose.cutloose.ui.common.RecyclerView.BaseRecyclerViewModel;
 
 public class ChatUsersRecyclerAdapter extends BaseRecyclerViewAdapter<Profile, BasicAction> {
 
-    public ChatUsersRecyclerAdapter(BaseRecyclerViewModel<Profile, BasicAction> baseRecyclerViewModel, LifecycleOwner lifecycleOwner ) {
-        super( baseRecyclerViewModel, lifecycleOwner );
+    public ChatUsersRecyclerAdapter(BaseRecyclerViewModel<Profile, BasicAction> baseRecyclerViewModel, LifecycleOwner lifecycleOwner) {
+        super(baseRecyclerViewModel, lifecycleOwner);
     }
 
     @Override
-    protected void setViewHolderBindings(ViewDataBinding binding, Profile message ) {
-        binding.setVariable( BR.viewModel, new ChatUserItemViewModel( message ) );
+    protected void setViewHolderBindings(ViewDataBinding binding, Profile message) {
+        binding.setVariable(BR.viewModel, new ChatUserItemViewModel(message));
     }
 
     @Override

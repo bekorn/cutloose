@@ -34,12 +34,12 @@ public class ChatActivityViewModel extends BaseViewModel {
         FirebaseActions.getInstance().findLobby(event.getEventId()).addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if(task.getResult().isEmpty()) {
+                if (task.getResult().isEmpty()) {
                     Log.d(TAG, "Couldn't find any lobbies, creating a new.");
                     createNewLobby(event);
                 } else {
                     Log.d(TAG, "A lobby was found! Joining.");
-                    for(DocumentSnapshot ds : task.getResult().getDocuments()) {
+                    for (DocumentSnapshot ds : task.getResult().getDocuments()) {
                         currentChat = ds.toObject(Chat.class);
                         currentChat.setId(ds.getId());
                     }
@@ -72,26 +72,26 @@ public class ChatActivityViewModel extends BaseViewModel {
             @Override
             public void onEvent(QuerySnapshot queryDocumentSnapshots, FirebaseFirestoreException e) {
                 System.out.println("Size LUL" + queryDocumentSnapshots.size());
-                 if(creatingState && queryDocumentSnapshots.size() > 1) {
-                     informChatFound();
-                     creatingState = false;
-                 }
-                 ArrayList<Profile> usrs = chatUsers.getValue() == null ? new ArrayList<>() : chatUsers.getValue();
-                 for (DocumentChange doc : queryDocumentSnapshots.getDocumentChanges()) {
+                if (creatingState && queryDocumentSnapshots.size() > 1) {
+                    informChatFound();
+                    creatingState = false;
+                }
+                ArrayList<Profile> usrs = chatUsers.getValue() == null ? new ArrayList<>() : chatUsers.getValue();
+                for (DocumentChange doc : queryDocumentSnapshots.getDocumentChanges()) {
 
-                     Profile profile = (doc.getDocument().toObject(Profile.class));
-                     boolean add = true;
+                    Profile profile = (doc.getDocument().toObject(Profile.class));
+                    boolean add = true;
 
-                     for(int i = 0; i < usrs.size(); i++) {
-                         if(profile.getId().equals(usrs.get(i).getId())) {
-                             add = false;
-                             break;
-                         }
-                     }
+                    for (int i = 0; i < usrs.size(); i++) {
+                        if (profile.getId().equals(usrs.get(i).getId())) {
+                            add = false;
+                            break;
+                        }
+                    }
 
-                     if(add) usrs.add(profile);
-                 }
-                 chatUsers.setValue(usrs);
+                    if (add) usrs.add(profile);
+                }
+                chatUsers.setValue(usrs);
             }
         });
     }

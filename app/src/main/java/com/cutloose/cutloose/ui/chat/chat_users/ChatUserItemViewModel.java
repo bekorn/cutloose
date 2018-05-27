@@ -7,7 +7,7 @@ public class ChatUserItemViewModel extends BaseViewModel {
 
     private Profile profile;
 
-    public ChatUserItemViewModel(Profile profile ) {
+    public ChatUserItemViewModel(Profile profile) {
         super();
         this.profile = profile;
     }

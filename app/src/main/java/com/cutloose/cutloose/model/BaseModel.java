@@ -4,7 +4,7 @@ import android.databinding.BaseObservable;
 
 public abstract class BaseModel extends BaseObservable {
 
-    public String getContent(){
+    public String getContent() {
         return toString();
     }
 }

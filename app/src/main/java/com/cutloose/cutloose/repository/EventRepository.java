@@ -11,8 +11,6 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 public class EventRepository {
 
@@ -21,9 +19,9 @@ public class EventRepository {
         FirebaseActions.getInstance().getEvents().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if(task.isSuccessful()) {
+                if (task.isSuccessful()) {
                     QuerySnapshot qs = task.getResult();
-                    for(DocumentSnapshot ds : qs.getDocuments()) {
+                    for (DocumentSnapshot ds : qs.getDocuments()) {
                         Event event = ds.toObject(Event.class);
                         event.setEventId(ds.getId());
                         eventsList.add(event);

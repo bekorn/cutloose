@@ -5,7 +5,6 @@ import android.arch.lifecycle.MutableLiveData;
 import android.support.annotation.NonNull;
 
 import com.cutloose.cutloose.model.Chat;
-import com.cutloose.cutloose.model.Event;
 import com.cutloose.cutloose.model.Message;
 import com.cutloose.cutloose.model.Profile;
 import com.cutloose.cutloose.utils.FirebaseActions;
@@ -60,15 +59,15 @@ public class ChatRepository {
         FirebaseActions.getInstance().getChats().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if(task.isSuccessful()) {
-                    for(DocumentSnapshot qs : task.getResult().getDocuments()) {
+                if (task.isSuccessful()) {
+                    for (DocumentSnapshot qs : task.getResult().getDocuments()) {
                         final Chat chat = qs.toObject(Chat.class);
                         FirebaseActions.getInstance().getChatUsers(chat.getEventId(), chat.getId()).addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                             @Override
                             public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                                if(task.isSuccessful()) {
+                                if (task.isSuccessful()) {
                                     ArrayList<Profile> users = new ArrayList<>();
-                                    for(DocumentSnapshot qs : task.getResult().getDocuments()) {
+                                    for (DocumentSnapshot qs : task.getResult().getDocuments()) {
                                         users.add(qs.toObject(Profile.class));
                                     }
                                     chat.setOwnersList(users);

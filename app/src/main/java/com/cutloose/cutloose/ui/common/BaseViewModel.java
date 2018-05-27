@@ -12,11 +12,11 @@ public abstract class BaseViewModel<Model extends BaseModel, ActionType> extends
 
     private final MutableLiveData<Action<Model, ActionType>> mCurrentAction = new MutableLiveData<>();
 
-    public void setAction( Action<Model, ActionType> action ) {
-        mCurrentAction.setValue( action );
+    public void setAction(Action<Model, ActionType> action) {
+        mCurrentAction.setValue(action);
     }
 
-    public void observeAction( final LifecycleOwner lifecycleOwner, final Observer<Action<Model, ActionType>> observer ) {
-        mCurrentAction.observe( lifecycleOwner, observer );
+    public void observeAction(final LifecycleOwner lifecycleOwner, final Observer<Action<Model, ActionType>> observer) {
+        mCurrentAction.observe(lifecycleOwner, observer);
     }
 }

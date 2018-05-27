@@ -20,7 +20,7 @@ import com.cutloose.cutloose.ui.common.BaseFragment;
 
 import java.util.ArrayList;
 
-public class ChatUsersFragment extends BaseFragment{
+public class ChatUsersFragment extends BaseFragment {
     private ChatUsersRecyclerAdapter chatUsersRecyclerAdapter;
     private RecyclerView recyclerView;
     private ChatUsersRecyclerViewModel chatUsersRecyclerViewModel;
@@ -48,8 +48,8 @@ public class ChatUsersFragment extends BaseFragment{
         chatUsersRecyclerViewModel.observeAction(this, new Observer<Action<Profile, BasicAction>>() {
             @Override
             public void onChanged(@Nullable Action<Profile, BasicAction> messageBasicActionAction) {
-                if(messageBasicActionAction != null) {
-                    if(messageBasicActionAction.getActionType() == BasicAction.ON_BUTTON_CLICK) {
+                if (messageBasicActionAction != null) {
+                    if (messageBasicActionAction.getActionType() == BasicAction.ON_BUTTON_CLICK) {
                         ((ChatActivity) getActivity()).mChatActivityViewModel.showUsers.set(false);
                         ((ChatActivity) getActivity()).mChatActivityViewModel.mSearching.set(false);
                     }
@@ -63,14 +63,14 @@ public class ChatUsersFragment extends BaseFragment{
         return R.layout.chat_users_fragment;
     }
 
-    private void adaptRecyclerView( View view ) {
-        recyclerView = view.findViewById( R.id.chat_users_recycler );
+    private void adaptRecyclerView(View view) {
+        recyclerView = view.findViewById(R.id.chat_users_recycler);
 
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager( getContext() );
-        recyclerView.setLayoutManager( linearLayoutManager );
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
+        recyclerView.setLayoutManager(linearLayoutManager);
 
-        chatUsersRecyclerAdapter = new ChatUsersRecyclerAdapter( chatUsersRecyclerViewModel,this );
-        recyclerView.setAdapter( chatUsersRecyclerAdapter );
+        chatUsersRecyclerAdapter = new ChatUsersRecyclerAdapter(chatUsersRecyclerViewModel, this);
+        recyclerView.setAdapter(chatUsersRecyclerAdapter);
     }
 
     public ChatUsersRecyclerViewModel getChatUsersRecyclerViewModel() {

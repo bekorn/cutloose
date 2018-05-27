@@ -9,11 +9,11 @@ import com.cutloose.cutloose.model.Chat;
 public class MyChatsItemViewModel {
     private Chat mChat;
 
-    public MyChatsItemViewModel( Chat chat ) {
+    public MyChatsItemViewModel(Chat chat) {
         mChat = chat;
     }
 
-    public void setChat( Chat chat ) {
+    public void setChat(Chat chat) {
         mChat = chat;
     }
 

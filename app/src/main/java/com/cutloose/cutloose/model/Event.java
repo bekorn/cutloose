@@ -6,7 +6,7 @@ import android.os.Parcelable;
 
 import com.cutloose.cutloose.BR;
 
-public class Event extends BaseModel implements Parcelable{
+public class Event extends BaseModel implements Parcelable {
 
     private String eventId;
     private String name;
@@ -71,7 +71,7 @@ public class Event extends BaseModel implements Parcelable{
         return name;
     }
 
-    public void setName( String name ) {
+    public void setName(String name) {
         this.name = name;
     }
 
@@ -79,7 +79,7 @@ public class Event extends BaseModel implements Parcelable{
         return pictureURL;
     }
 
-    public void setPictureURL( String pictureURL ) {
+    public void setPictureURL(String pictureURL) {
         this.pictureURL = pictureURL;
     }
 
@@ -88,7 +88,7 @@ public class Event extends BaseModel implements Parcelable{
         return popularity;
     }
 
-    public void setPopularity( int popularity ) {
+    public void setPopularity(int popularity) {
         this.popularity = popularity;
         notifyPropertyChanged(BR.popularity);
     }
@@ -98,7 +98,7 @@ public class Event extends BaseModel implements Parcelable{
         return activeEventsCount;
     }
 
-    public void setActiveEventsCount( int activeEventsCount ) {
+    public void setActiveEventsCount(int activeEventsCount) {
         this.activeEventsCount = activeEventsCount;
         notifyPropertyChanged(BR.activeEventsCount);
     }

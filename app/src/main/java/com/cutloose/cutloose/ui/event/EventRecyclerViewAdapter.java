@@ -14,20 +14,20 @@ import com.cutloose.cutloose.ui.common.RecyclerView.BaseRecyclerViewModel;
 
 public class EventRecyclerViewAdapter extends BaseRecyclerViewAdapter<Event, BasicAction> {
 
-    public EventRecyclerViewAdapter( BaseRecyclerViewModel<Event, BasicAction> baseRecyclerViewModel, LifecycleOwner lifecycleOwner ) {
-        super( baseRecyclerViewModel, lifecycleOwner );
+    public EventRecyclerViewAdapter(BaseRecyclerViewModel<Event, BasicAction> baseRecyclerViewModel, LifecycleOwner lifecycleOwner) {
+        super(baseRecyclerViewModel, lifecycleOwner);
     }
 
     @Override
-    protected void setViewHolderBindings( ViewDataBinding binding, Event event ) {
-        binding.setVariable( BR.viewModel, new EventItemViewModel( event ) );
+    protected void setViewHolderBindings(ViewDataBinding binding, Event event) {
+        binding.setVariable(BR.viewModel, new EventItemViewModel(event));
 
-        binding.getRoot().setOnClickListener( new View.OnClickListener() {
+        binding.getRoot().setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick( View v ) {
-                mViewModel.setAction( new Action<>( event, BasicAction.RECYCLER_ITEM_CLICK ) );
+            public void onClick(View v) {
+                mViewModel.setAction(new Action<>(event, BasicAction.RECYCLER_ITEM_CLICK));
             }
-        } );
+        });
     }
 
     @Override

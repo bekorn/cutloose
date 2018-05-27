@@ -14,7 +14,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.cutloose.cutloose.model.BaseModel;
-import com.cutloose.cutloose.ui.common.Action.Action;
 import com.cutloose.cutloose.ui.common.BaseViewModel;
 
 import java.util.ArrayList;
@@ -25,8 +24,8 @@ public abstract class BaseRecyclerViewAdapter<Model extends BaseModel, ActionTyp
 
         private ViewDataBinding mBinding;
 
-        ViewHolder( View instructorView, ViewDataBinding binding ) {
-            super( instructorView );
+        ViewHolder(View instructorView, ViewDataBinding binding) {
+            super(instructorView);
 
             mBinding = binding;
         }
@@ -35,47 +34,47 @@ public abstract class BaseRecyclerViewAdapter<Model extends BaseModel, ActionTyp
     protected final ArrayList<Model> mData = new ArrayList<>();
     protected final BaseViewModel<Model, ActionType> mViewModel;
 
-    protected abstract void setViewHolderBindings( ViewDataBinding binding, Model model );
+    protected abstract void setViewHolderBindings(ViewDataBinding binding, Model model);
 
     protected abstract int getItemViewId();
 
-    public BaseRecyclerViewAdapter( BaseRecyclerViewModel<Model, ActionType> baseRecyclerViewModel, LifecycleOwner lifecycleOwner ) {
-        this( baseRecyclerViewModel.getLiveData(), baseRecyclerViewModel, lifecycleOwner );
+    public BaseRecyclerViewAdapter(BaseRecyclerViewModel<Model, ActionType> baseRecyclerViewModel, LifecycleOwner lifecycleOwner) {
+        this(baseRecyclerViewModel.getLiveData(), baseRecyclerViewModel, lifecycleOwner);
     }
 
-    public BaseRecyclerViewAdapter( MutableLiveData<ArrayList<Model>> observableData,
-                                    BaseViewModel<Model, ActionType> viewModel,
-                                    LifecycleOwner lifecycleOwner ) {
+    public BaseRecyclerViewAdapter(MutableLiveData<ArrayList<Model>> observableData,
+                                   BaseViewModel<Model, ActionType> viewModel,
+                                   LifecycleOwner lifecycleOwner) {
         super();
 
-        observableData.observe( lifecycleOwner, new Observer<ArrayList<Model>>() {
+        observableData.observe(lifecycleOwner, new Observer<ArrayList<Model>>() {
             @Override
-            public void onChanged( @Nullable ArrayList<Model> changedData ) {
-                setData( changedData );
+            public void onChanged(@Nullable ArrayList<Model> changedData) {
+                setData(changedData);
             }
-        } );
+        });
 
         mViewModel = viewModel;
     }
 
     @NonNull
     @Override
-    public ViewHolder onCreateViewHolder( @NonNull ViewGroup parent, int viewType ) {
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
         ViewDataBinding binding = DataBindingUtil.inflate(
-                LayoutInflater.from( parent.getContext() ),
+                LayoutInflater.from(parent.getContext()),
                 getItemViewId(),
                 parent,
                 false
         );
 
-        return new ViewHolder( binding.getRoot(), binding );
+        return new ViewHolder(binding.getRoot(), binding);
     }
 
     @Override
-    public void onBindViewHolder( @NonNull BaseRecyclerViewAdapter.ViewHolder holder, int position ) {
+    public void onBindViewHolder(@NonNull BaseRecyclerViewAdapter.ViewHolder holder, int position) {
 
-        setViewHolderBindings( holder.mBinding, mData.get( position ) );
+        setViewHolderBindings(holder.mBinding, mData.get(position));
     }
 
     @Override
@@ -84,9 +83,9 @@ public abstract class BaseRecyclerViewAdapter<Model extends BaseModel, ActionTyp
         return mData.size();
     }
 
-    public void setData( final ArrayList<Model> newData ) {
+    public void setData(final ArrayList<Model> newData) {
 
-        DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff( new DiffUtil.Callback() {
+        DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(new DiffUtil.Callback() {
             @Override
             public int getOldListSize() {
                 return mData.size();
@@ -98,19 +97,19 @@ public abstract class BaseRecyclerViewAdapter<Model extends BaseModel, ActionTyp
             }
 
             @Override
-            public boolean areItemsTheSame( int oldItemPosition, int newItemPosition ) {
-                return mData.get( oldItemPosition ).equals( newData.get( newItemPosition ) );
+            public boolean areItemsTheSame(int oldItemPosition, int newItemPosition) {
+                return mData.get(oldItemPosition).equals(newData.get(newItemPosition));
             }
 
             @Override
-            public boolean areContentsTheSame( int oldItemPosition, int newItemPosition ) {
-                return mData.get( oldItemPosition ).getContent().equals( newData.get( newItemPosition ).getContent() );
+            public boolean areContentsTheSame(int oldItemPosition, int newItemPosition) {
+                return mData.get(oldItemPosition).getContent().equals(newData.get(newItemPosition).getContent());
             }
-        } );
+        });
 
         mData.clear();
-        mData.addAll( newData );
+        mData.addAll(newData);
 
-        diffResult.dispatchUpdatesTo( this );
+        diffResult.dispatchUpdatesTo(this);
     }
 }

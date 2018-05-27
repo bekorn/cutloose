@@ -1,6 +1,5 @@
 package com.cutloose.cutloose.model;
 
-import java.util.Date;
 import java.util.Objects;
 
 

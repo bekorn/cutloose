@@ -28,6 +28,7 @@ public class LoginViewModel extends BaseViewModel {
         commonOperations();
         return FirebaseAuth.getInstance().signInWithEmailAndPassword(email.get(), password.get());
     }
+
     public Task<AuthResult> register() {
         commonOperations();
         return FirebaseAuth.getInstance().createUserWithEmailAndPassword(email.get(), password.get());

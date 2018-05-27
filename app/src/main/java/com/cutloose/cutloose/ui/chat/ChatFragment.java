@@ -31,21 +31,21 @@ public class ChatFragment extends BaseFragment implements View.OnLayoutChangeLis
     }
 
     @Override
-    public void onViewCreated( @NonNull View view, @Nullable Bundle savedInstanceState ) {
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
 
-        mChatFragmentRecyclerViewModel = ViewModelProviders.of( this ).get( ChatFragmentRecyclerViewModel.class );
+        mChatFragmentRecyclerViewModel = ViewModelProviders.of(this).get(ChatFragmentRecyclerViewModel.class);
 
-        ((ChatFragmentBinding)mViewDataBinding).setViewModel( mChatFragmentRecyclerViewModel );
+        ((ChatFragmentBinding) mViewDataBinding).setViewModel(mChatFragmentRecyclerViewModel);
 
-        adaptRecyclerView( view );
+        adaptRecyclerView(view);
 
-        mChatFragmentRecyclerViewModel.getLiveData().observe( this, new Observer<ArrayList<Message>>() {
+        mChatFragmentRecyclerViewModel.getLiveData().observe(this, new Observer<ArrayList<Message>>() {
             @Override
-            public void onChanged( @Nullable ArrayList<Message> messages ) {
-                if(messages == null || messages.size() == 0) return;
-                mRecyclerView.smoothScrollToPosition( mChatFragmentRecyclerViewAdapter.getItemCount() );
+            public void onChanged(@Nullable ArrayList<Message> messages) {
+                if (messages == null || messages.size() == 0) return;
+                mRecyclerView.smoothScrollToPosition(mChatFragmentRecyclerViewAdapter.getItemCount());
             }
-        } );
+        });
 
         listenActions();
     }
@@ -54,8 +54,8 @@ public class ChatFragment extends BaseFragment implements View.OnLayoutChangeLis
         mChatFragmentRecyclerViewModel.observeAction(this, new Observer<Action<Message, BasicAction>>() {
             @Override
             public void onChanged(@Nullable Action<Message, BasicAction> messageBasicActionAction) {
-                if(messageBasicActionAction != null) {
-                    if(messageBasicActionAction.getActionType() == BasicAction.ON_BUTTON_CLICK) {
+                if (messageBasicActionAction != null) {
+                    if (messageBasicActionAction.getActionType() == BasicAction.ON_BUTTON_CLICK) {
                         ((ChatActivity) getActivity()).mChatActivityViewModel.showUsers.set(true);
                         ((ChatActivity) getActivity()).mChatActivityViewModel.mSearching.set(true);
                     }
@@ -68,25 +68,25 @@ public class ChatFragment extends BaseFragment implements View.OnLayoutChangeLis
         mChatFragmentRecyclerViewModel.fetchData(eventId, chatId);
     }
 
-    private void adaptRecyclerView( View view ) {
-        mRecyclerView = view.findViewById( R.id.chat_recycler );
+    private void adaptRecyclerView(View view) {
+        mRecyclerView = view.findViewById(R.id.chat_recycler);
 
-        mRecyclerView.addOnLayoutChangeListener( this );
+        mRecyclerView.addOnLayoutChangeListener(this);
 
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager( getContext() );
-        mRecyclerView.setLayoutManager( linearLayoutManager );
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
+        mRecyclerView.setLayoutManager(linearLayoutManager);
 
-        mChatFragmentRecyclerViewAdapter = new ChatFragmentRecyclerViewAdapter( mChatFragmentRecyclerViewModel,this );
-        mRecyclerView.setAdapter( mChatFragmentRecyclerViewAdapter );
+        mChatFragmentRecyclerViewAdapter = new ChatFragmentRecyclerViewAdapter(mChatFragmentRecyclerViewModel, this);
+        mRecyclerView.setAdapter(mChatFragmentRecyclerViewAdapter);
     }
 
     @Override
-    public void onLayoutChange( View view, int left, int top, int right, int bottom,
-                                int oldLeft, int oldTop, int oldRight, int oldBottom ) {
+    public void onLayoutChange(View view, int left, int top, int right, int bottom,
+                               int oldLeft, int oldTop, int oldRight, int oldBottom) {
         /**
          * When keyboard opens, this makes chat scroll again to bottom.
          */
-        if ( bottom < oldBottom) {
+        if (bottom < oldBottom) {
             mRecyclerView.postDelayed(new Runnable() {
                 @Override
                 public void run() {

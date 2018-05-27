@@ -18,7 +18,7 @@ public abstract class BaseFragment extends Fragment {
 
     @Nullable
     @Override
-    public View onCreateView( @NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState ) {
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         mViewDataBinding = DataBindingUtil.inflate(
                 inflater,
@@ -27,13 +27,13 @@ public abstract class BaseFragment extends Fragment {
                 false
         );
 
-        Log.d( TAG, "Created -> " + getResources().getResourceName( getLayoutId() ) );
+        Log.d(TAG, "Created -> " + getResources().getResourceName(getLayoutId()));
 
         return mViewDataBinding.getRoot();
     }
 
     @Override
-    public abstract void onViewCreated( @NonNull View view, @Nullable Bundle savedInstanceState );
+    public abstract void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState);
 
     protected abstract int getLayoutId();
 }

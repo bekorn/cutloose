@@ -29,36 +29,35 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 
 public class EventActivity extends BaseActivity {
 
     static private final String TAG = "EventActivity";
     EventRecyclerViewModel eventRecyclerViewModel;
+
     @Override
     protected int getLayoutId() {
         return R.layout.event_activity;
     }
 
     @Override
-    public void onCreate( @Nullable Bundle savedInstanceState ) {
-        super.onCreate( savedInstanceState );
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
 
-        setTitle( R.string.event_title );
+        setTitle(R.string.event_title);
 
-        eventRecyclerViewModel = ViewModelProviders.of( this ).get( EventRecyclerViewModel.class );
+        eventRecyclerViewModel = ViewModelProviders.of(this).get(EventRecyclerViewModel.class);
 
-        EventRecyclerViewAdapter eventRecyclerViewAdapter = new EventRecyclerViewAdapter( eventRecyclerViewModel, this );
+        EventRecyclerViewAdapter eventRecyclerViewAdapter = new EventRecyclerViewAdapter(eventRecyclerViewModel, this);
 
         observeActions(eventRecyclerViewModel);
 
         observeDataLoad(eventRecyclerViewModel);
 
-        RecyclerView recyclerView = findViewById( R.id.event_recycler_view );
+        RecyclerView recyclerView = findViewById(R.id.event_recycler_view);
 
-        recyclerView.setLayoutManager( new GridLayoutManager( this, 3 ) );
-        recyclerView.setAdapter( eventRecyclerViewAdapter );
+        recyclerView.setLayoutManager(new GridLayoutManager(this, 3));
+        recyclerView.setAdapter(eventRecyclerViewAdapter);
 
         ((EventActivityBinding) mViewDataBinding).setViewModel(eventRecyclerViewModel);
 
@@ -66,22 +65,22 @@ public class EventActivity extends BaseActivity {
     }
 
     private void observeActions(EventRecyclerViewModel eventRecyclerViewModel) {
-        eventRecyclerViewModel.observeAction( this, new Observer<Action<Event, BasicAction>>() {
+        eventRecyclerViewModel.observeAction(this, new Observer<Action<Event, BasicAction>>() {
             @Override
-            public void onChanged( @Nullable Action<Event, BasicAction> eventAction ) {
+            public void onChanged(@Nullable Action<Event, BasicAction> eventAction) {
 
-                if( eventAction == null ) return;
+                if (eventAction == null) return;
 
-                switch( eventAction.getActionType() ) {
+                switch (eventAction.getActionType()) {
                     case RECYCLER_ITEM_CLICK:
-                        ((CutLoose)(getApplication())).getDatabase().clicksDao().insertClicks(new Clicks(eventAction.getModel().getEventId(), FirebaseAuth.getInstance().getUid()));
+                        ((CutLoose) (getApplication())).getDatabase().clicksDao().insertClicks(new Clicks(eventAction.getModel().getEventId(), FirebaseAuth.getInstance().getUid()));
                         eventAction.getModel().setPopularity(eventAction.getModel().getPopularity() + 1);
-                        Intent intent = new Intent( EventActivity.this, ChatActivity.class );
+                        Intent intent = new Intent(EventActivity.this, ChatActivity.class);
                         intent.putExtra("event", eventAction.getModel());
-                        startActivity( intent );
+                        startActivity(intent);
                 }
             }
-        } );
+        });
     }
 
     private void observeDataLoad(EventRecyclerViewModel eventRecyclerViewModel) {
@@ -90,12 +89,12 @@ public class EventActivity extends BaseActivity {
             public void onChanged(@Nullable ArrayList<Event> events) {
                 eventRecyclerViewModel.loading.set(false);
 
-                for(Event event : events) {
-                    event.setPopularity(((CutLoose)(getApplication())).getDatabase().clicksDao().getCount(event.getEventId(), FirebaseAuth.getInstance().getUid()));
+                for (Event event : events) {
+                    event.setPopularity(((CutLoose) (getApplication())).getDatabase().clicksDao().getCount(event.getEventId(), FirebaseAuth.getInstance().getUid()));
                     FirebaseActions.getInstance().getActiveness(event.getEventId()).addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                         @Override
                         public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                            if(task.isSuccessful()) {
+                            if (task.isSuccessful()) {
                                 event.setActiveEventsCount(task.getResult().size());
                             }
                         }
@@ -106,15 +105,15 @@ public class EventActivity extends BaseActivity {
     }
 
     @Override
-    public boolean onCreateOptionsMenu( Menu menu ) {
+    public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater menuInflater = getMenuInflater();
-        menuInflater.inflate( R.menu.titlebar_menu, menu );
+        menuInflater.inflate(R.menu.titlebar_menu, menu);
         return true;
     }
 
     @Override
-    public boolean onOptionsItemSelected( MenuItem item ) {
-        switch( item.getItemId() ) {
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
             case R.id.menu_profile:
                 startProfileActivity();
                 return true;
@@ -122,13 +121,13 @@ public class EventActivity extends BaseActivity {
                 eventRecyclerViewModel.fetchData();
                 return true;
             default:
-                return super.onOptionsItemSelected( item );
+                return super.onOptionsItemSelected(item);
         }
 
     }
 
     private void startProfileActivity() {
-        Intent intent = new Intent( this, ProfileActivity.class );
-        startActivity( intent );
+        Intent intent = new Intent(this, ProfileActivity.class);
+        startActivity(intent);
     }
 }

@@ -43,17 +43,17 @@ public class Chat extends BaseModel {
 
     @Bindable
     public String getOwners() {
-        if(ownersList == null || ownersList.size() == 0) {
+        if (ownersList == null || ownersList.size() == 0) {
             return "Loading...";
         }
 
         List<String> names = new ArrayList<>();
 
-        for( Profile profile : ownersList.subList( 0, Math.min( 3, ownersList.size() ) ) ) {
-            names.add( profile.getName() );
+        for (Profile profile : ownersList.subList(0, Math.min(3, ownersList.size()))) {
+            names.add(profile.getName());
         }
 
-        return TextUtils.join( ", ", names );
+        return TextUtils.join(", ", names);
     }
 
     public Chat() {

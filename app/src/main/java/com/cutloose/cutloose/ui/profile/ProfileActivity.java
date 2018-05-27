@@ -13,10 +13,10 @@ public class ProfileActivity extends BaseActivity {
     private ProfileActivityBinding profileActivityBinding;
 
     @Override
-    public void onCreate( @Nullable Bundle savedInstanceState ) {
-        super.onCreate( savedInstanceState );
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
         profileViewModel = ViewModelProviders.of(this).get(ProfileViewModel.class);
-        profileActivityBinding = (ProfileActivityBinding)this.mViewDataBinding;
+        profileActivityBinding = (ProfileActivityBinding) this.mViewDataBinding;
         profileActivityBinding.setViewModel(profileViewModel);
         profileViewModel.fetchData();
 
