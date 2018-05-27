@@ -1,6 +1,9 @@
 package com.cutloose.cutloose.model;
 
+import android.databinding.Bindable;
 import android.text.TextUtils;
+
+import com.cutloose.cutloose.BR;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,8 +14,10 @@ import java.util.List;
 
 public class Chat extends BaseModel {
     private String id;
+    private String eventId;
     private Event eventType;
-    private ArrayList<Profile> owners;
+    private long createdAt;
+    private ArrayList<Profile> ownersList;
 
     public void setId(String id) {
         this.id = id;
@@ -22,8 +27,9 @@ public class Chat extends BaseModel {
         this.eventType = eventType;
     }
 
-    public void setOwners(ArrayList<Profile> owners) {
-        this.owners = owners;
+    public void setOwnersList(ArrayList<Profile> ownersList) {
+        this.ownersList = ownersList;
+        notifyPropertyChanged(BR.owners);
     }
 
     public String getId() {
@@ -35,14 +41,15 @@ public class Chat extends BaseModel {
         return eventType;
     }
 
-    public ArrayList<Profile> getOwners() {
-        return owners;
-    }
+    @Bindable
+    public String getOwners() {
+        if(ownersList == null || ownersList.size() == 0) {
+            return "Loading...";
+        }
 
-    public String showOwners() {
         List<String> names = new ArrayList<>();
 
-        for( Profile profile : owners.subList( 0, Math.min( 3, owners.size() ) ) ) {
+        for( Profile profile : ownersList.subList( 0, Math.min( 3, ownersList.size() ) ) ) {
             names.add( profile.getName() );
         }
 
@@ -52,10 +59,33 @@ public class Chat extends BaseModel {
     public Chat() {
     }
 
-    public Chat(String id, Event eventType, ArrayList<Profile> owners) {
+    public Chat(String id, Event eventType, ArrayList<Profile> ownersList) {
 
         this.id = id;
         this.eventType = eventType;
-        this.owners = owners;
+        this.ownersList = ownersList;
+    }
+
+    public Chat(String id, Event eventType, long createdAt, ArrayList<Profile> ownersList) {
+        this.id = id;
+        this.eventType = eventType;
+        this.createdAt = createdAt;
+        this.ownersList = ownersList;
+    }
+
+    public long getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(long createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public String getEventId() {
+        return eventId;
+    }
+
+    public void setEventId(String eventId) {
+        this.eventId = eventId;
     }
 }

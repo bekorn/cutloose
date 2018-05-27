@@ -36,7 +36,7 @@ public class MyChatsFragment extends BaseFragment {
 
         mChatsFragmentViewModel = ViewModelProviders.of(this).get(MyChatsRecyclerViewModel.class);
 
-        mChatsFragmentViewModel.fetchData(); //TODO: This should take in chat ID.
+        mChatsFragmentViewModel.fetchData();
 
         adaptRecyclerView( view );
     }
@@ -56,8 +56,9 @@ public class MyChatsFragment extends BaseFragment {
                 switch( chatAction.getActionType() ) {
                     case RECYCLER_ITEM_CLICK:
                         Intent intent = new Intent( getContext(), ChatActivity.class );
-                        intent.putExtra( "isProfile", true );
-                        intent.putExtra( "owners", chatAction.getModel().showOwners() );
+                        intent.putExtra( "chatId", chatAction.getModel().getId() );
+                        intent.putExtra( "eventId", chatAction.getModel().getEventId() );
+                        intent.putExtra( "owners", chatAction.getModel().getOwners() );
                         startActivity( intent );
                         break;
                 }

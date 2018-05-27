@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "532761798680",
+    "firebase_url": "https://cutloose-ae259.firebaseio.com",
+    "project_id": "cutloose-ae259",
+    "storage_bucket": "cutloose-ae259.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:532761798680:android:cdfe8f722b5d6f96",
+        "android_client_info": {
+          "package_name": "com.cutloose.cutloose"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "532761798680-p25p6k5on8f1svevnk79fa2ibuhcmh0s.apps.googleusercontent.com",
+          "client_type": 3
+        },
+        {
+          "client_id": "532761798680-p25p6k5on8f1svevnk79fa2ibuhcmh0s.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyADjVoSV8jlZBsu3GJuyvYg510rHyPB3d0"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

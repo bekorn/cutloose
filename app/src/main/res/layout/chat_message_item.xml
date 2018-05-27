@@ -17,8 +17,16 @@
         android:paddingLeft="@{viewModel.checkOwnership ? @dimen/chat_message_padding : @dimen/zero}"
         android:paddingRight="@{!viewModel.checkOwnership ? @dimen/chat_message_padding : @dimen/zero}"
         android:paddingStart="@{viewModel.checkOwnership ? @dimen/chat_message_padding : @dimen/zero}"
-        android:paddingEnd="@{!viewModel.checkOwnership ? @dimen/chat_message_padding : @dimen/zero}">
-
+        android:paddingEnd="@{!viewModel.checkOwnership ? @dimen/chat_message_padding : @dimen/zero}"
+        android:orientation="vertical">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="Berk Emre"
+            android:text="@{viewModel.message.userName}"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:textStyle="bold"/>
         <TextView
             tools:text="Deneme mesaj deneme"
             android:text="@{viewModel.message.content}"

@@ -1,6 +1,8 @@
 package com.cutloose.cutloose.model;
 
-public abstract class BaseModel {
+import android.databinding.BaseObservable;
+
+public abstract class BaseModel extends BaseObservable {
 
     public String getContent(){
         return toString();

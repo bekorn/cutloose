@@ -13,6 +13,8 @@ import android.view.View;
 import com.cutloose.cutloose.R;
 import com.cutloose.cutloose.databinding.ChatFragmentBinding;
 import com.cutloose.cutloose.model.Message;
+import com.cutloose.cutloose.ui.common.Action.Action;
+import com.cutloose.cutloose.ui.common.Action.BasicAction;
 import com.cutloose.cutloose.ui.common.BaseFragment;
 
 import java.util.ArrayList;
@@ -44,7 +46,25 @@ public class ChatFragment extends BaseFragment implements View.OnLayoutChangeLis
             }
         } );
 
-        mChatFragmentRecyclerViewModel.fetchData(); //TODO: This should take in chat ID.
+        listenActions();
+    }
+
+    public void listenActions() {
+        mChatFragmentRecyclerViewModel.observeAction(this, new Observer<Action<Message, BasicAction>>() {
+            @Override
+            public void onChanged(@Nullable Action<Message, BasicAction> messageBasicActionAction) {
+                if(messageBasicActionAction != null) {
+                    if(messageBasicActionAction.getActionType() == BasicAction.ON_BUTTON_CLICK) {
+                        ((ChatActivity) getActivity()).mChatActivityViewModel.showUsers.set(true);
+                        ((ChatActivity) getActivity()).mChatActivityViewModel.mSearching.set(true);
+                    }
+                }
+            }
+        });
+    }
+
+    public void fetchData(String eventId, String chatId) {
+        mChatFragmentRecyclerViewModel.fetchData(eventId, chatId);
     }
 
     private void adaptRecyclerView( View view ) {

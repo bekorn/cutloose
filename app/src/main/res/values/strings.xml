@@ -21,4 +21,9 @@
 
     <string name="profile">Profile</string>
     <string name="my_chats_item_prefix">Chat with:</string>
+    <string name="enter_your_email">Enter your email</string>
+    <string name="enter_your_password">Enter your password</string>
+    <string name="register">Register</string>
+    <string name="enter_your_username">Enter your username</string>
+    <string name="see_users">See Users</string>
 </resources>

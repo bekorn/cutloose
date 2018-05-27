@@ -41,6 +41,10 @@ public class Profile extends BaseModel {
         return id;
     }
 
+    public void setId(String id) {
+        this.id = id;
+    }
+
     public ArrayList<String> getTags() {
         return tags;
 

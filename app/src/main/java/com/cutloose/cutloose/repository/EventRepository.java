@@ -1,42 +1,36 @@
 package com.cutloose.cutloose.repository;
 
+import android.arch.lifecycle.MutableLiveData;
+import android.support.annotation.NonNull;
+
 import com.cutloose.cutloose.model.Event;
+import com.cutloose.cutloose.utils.FirebaseActions;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class EventRepository implements BaseRepository<Event> {
+public class EventRepository {
 
-    @Override
-    public ArrayList<Event> getAll() {
-
-        int amount = (int) (Math.random() * 12 + 10);
-        return RandomModelGenerator.getRandomModel( amount );
-    }
-}
-
-class RandomModelGenerator {
-
-    static private final List<String> mNames = Arrays.asList( "Brunch", "Catan", "Study", "420" );
-
-    static Event getRandomModel() {
-
-        return new Event(
-                mNames.get( (int) (Math.random() * mNames.size()) ),
-                "randomURL",
-                (int) (Math.random() * 4) + 1,
-                (int) (Math.random() * 12) + 5 );
-    }
-
-    static ArrayList<Event> getRandomModel( int amount ) {
-
-        ArrayList<Event> result = new ArrayList<>();
-
-        for( int i = 0; i < amount; i++ ) {
-            result.add( getRandomModel() );
-        }
-
-        return result;
+    public void getEvents(MutableLiveData<ArrayList<Event>> events) {
+        final ArrayList<Event> eventsList = new ArrayList<>();
+        FirebaseActions.getInstance().getEvents().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if(task.isSuccessful()) {
+                    QuerySnapshot qs = task.getResult();
+                    for(DocumentSnapshot ds : qs.getDocuments()) {
+                        Event event = ds.toObject(Event.class);
+                        event.setEventId(ds.getId());
+                        eventsList.add(event);
+                    }
+                    events.setValue(eventsList);
+                }
+            }
+        });
     }
 }

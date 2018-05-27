@@ -1,28 +1,31 @@
 package com.cutloose.cutloose.model;
 
 import java.util.Date;
+import java.util.Objects;
 
 
 public class Message extends BaseModel {
-    private Date date;
+    private Long createdAt;
     private String content;
     private String userId;
+    private String userName;
 
     public Message() {
     }
 
-    public Message(Date date, String content, String userId) {
-        this.date = date;
+    public Message(Long createdAt, String content, String userId, String userName) {
+        this.createdAt = createdAt;
         this.content = content;
         this.userId = userId;
+        this.userName = userName;
     }
 
-    public Date getDate() {
-        return date;
+    public Long getCreatedAt() {
+        return createdAt;
     }
 
-    public void setDate(Date date) {
-        this.date = date;
+    public void setCreatedAt(Long createdAt) {
+        this.createdAt = createdAt;
     }
 
     public String getContent() {
@@ -45,20 +48,24 @@ public class Message extends BaseModel {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-
         Message message = (Message) o;
-
-        if (date != null ? !date.equals(message.date) : message.date != null) return false;
-        if (content != null ? !content.equals(message.content) : message.content != null)
-            return false;
-        return userId != null ? userId.equals(message.userId) : message.userId == null;
+        return Objects.equals(createdAt, message.createdAt) &&
+                Objects.equals(content, message.content) &&
+                Objects.equals(userId, message.userId) &&
+                Objects.equals(userName, message.userName);
     }
 
     @Override
     public int hashCode() {
-        int result = date != null ? date.hashCode() : 0;
-        result = 31 * result + (content != null ? content.hashCode() : 0);
-        result = 31 * result + (userId != null ? userId.hashCode() : 0);
-        return result;
+
+        return Objects.hash(createdAt, content, userId, userName);
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 }

@@ -2,13 +2,25 @@ package com.cutloose.cutloose.repository;
 
 
 import android.arch.lifecycle.MutableLiveData;
+import android.support.annotation.NonNull;
 
 import com.cutloose.cutloose.model.Chat;
 import com.cutloose.cutloose.model.Event;
 import com.cutloose.cutloose.model.Message;
 import com.cutloose.cutloose.model.Profile;
+import com.cutloose.cutloose.utils.FirebaseActions;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.DocumentChange;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 public class ChatRepository {
     private static final ChatRepository ourInstance = new ChatRepository();
@@ -20,41 +32,54 @@ public class ChatRepository {
     private ChatRepository() {
     }
 
-    public void getChatMessages(String chatId, MutableLiveData<ArrayList<Message>> messages) {
+    public void getChatMessages(String chatId, String eventId, MutableLiveData<ArrayList<Message>> messages) {
         ArrayList<Message> messageList = new ArrayList<>();
 
-        for(int i = 0; i < 10; i++) {
-            Message message = new Message();
-            message.setUserId((i % 2) + "");
-            message.setContent("Lorem ipsum dolor sit amet, consectetur adipiscing elit.");
-            messageList.add(message);
-        }
+        FirebaseActions.getInstance().getMessages(eventId, chatId).orderBy("createdAt", Query.Direction.ASCENDING).addSnapshotListener(new EventListener<QuerySnapshot>() {
+            @Override
+            public void onEvent(QuerySnapshot queryDocumentSnapshots, FirebaseFirestoreException e) {
+                for (DocumentChange doc : queryDocumentSnapshots.getDocumentChanges()) {
+                    messageList.add((doc.getDocument().toObject(Message.class)));
 
-        messages.setValue(messageList);
+                }
+                Collections.sort(messageList, new Comparator<Message>() {
+                    @Override
+                    public int compare(Message message, Message t1) {
+                        return message.getCreatedAt().compareTo(t1.getCreatedAt());
+                    }
+                });
+                messages.setValue(messageList);
+//                recyclerView.smoothScrollToPosition(chatRecyclerAdapter.getItemCount());
+            }
+        });
     }
 
-    public void getChats(String userId, MutableLiveData<ArrayList<Chat>> chats) {
+    public void getChats(MutableLiveData<ArrayList<Chat>> chats) {
         ArrayList<Chat> chatList = new ArrayList<>();
 
-        for(int i = 0; i < 3; i++) {
-            Event e = new Event();
-            e.setName("Brunch");
-
-            ArrayList<Profile> profiles = new ArrayList<>();
-
-            for(int j = 0; j < 3; j++) {
-                Profile p = new Profile();
-                if(j == 0)  p.setName("Ali");
-                else if(j == 1)  p.setName("Murat");
-                else if(j == 2)  p.setName("Efe");
-                profiles.add(p);
+        FirebaseActions.getInstance().getChats().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if(task.isSuccessful()) {
+                    for(DocumentSnapshot qs : task.getResult().getDocuments()) {
+                        final Chat chat = qs.toObject(Chat.class);
+                        FirebaseActions.getInstance().getChatUsers(chat.getEventId(), chat.getId()).addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                if(task.isSuccessful()) {
+                                    ArrayList<Profile> users = new ArrayList<>();
+                                    for(DocumentSnapshot qs : task.getResult().getDocuments()) {
+                                        users.add(qs.toObject(Profile.class));
+                                    }
+                                    chat.setOwnersList(users);
+                                }
+                            }
+                        });
+                        chatList.add(chat);
+                    }
+                    chats.setValue(chatList);
+                }
             }
-
-            Chat chat = new Chat(i + "", e, profiles);
-            chatList.add(chat);
-        }
-
-        chats.setValue(chatList);
-
+        });
     }
 }

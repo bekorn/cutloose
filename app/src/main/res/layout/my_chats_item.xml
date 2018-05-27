@@ -29,9 +29,10 @@
                 android:text="@string/my_chats_item_prefix" />
 
             <TextView
+                android:layout_marginLeft="10dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@{viewModel.getChat().showOwners()}"
+                android:text="@{viewModel.getChat().getOwners}"
                 android:textAppearance="@style/TextAppearance.AppCompat.Body1"
                 tools:text="Participants" />
 
