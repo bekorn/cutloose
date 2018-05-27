@@ -7,6 +7,7 @@ import android.support.annotation.NonNull;
 import android.util.Log;
 
 import com.cutloose.cutloose.model.Chat;
+import com.cutloose.cutloose.model.Event;
 import com.cutloose.cutloose.model.Profile;
 import com.cutloose.cutloose.ui.common.Action.Action;
 import com.cutloose.cutloose.ui.common.BaseViewModel;
@@ -29,40 +30,41 @@ public class ChatActivityViewModel extends BaseViewModel {
     private Chat currentChat = null;
     private boolean creatingState = false;
 
-    public void checkExistingLobbies(String eventId) {
-        FirebaseActions.getInstance().findLobby(eventId).addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+    public void checkExistingLobbies(Event event) {
+        FirebaseActions.getInstance().findLobby(event.getEventId()).addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if(task.getResult().isEmpty()) {
                     Log.d(TAG, "Couldn't find any lobbies, creating a new.");
-                    createNewLobby(eventId);
+                    createNewLobby(event);
                 } else {
                     Log.d(TAG, "A lobby was found! Joining.");
                     for(DocumentSnapshot ds : task.getResult().getDocuments()) {
                         currentChat = ds.toObject(Chat.class);
                         currentChat.setId(ds.getId());
                     }
-                    FirebaseActions.getInstance().joinLobby(eventId, currentChat.getId());
+                    FirebaseActions.getInstance().joinLobby(event.getEventId(), currentChat.getId());
                     FirebaseActions.getInstance().saveChat(currentChat);
                     informChatFound();
-                    listenJoiningUsers(eventId, currentChat.getId());
+                    listenJoiningUsers(event.getEventId(), currentChat.getId());
                 }
             }
         });
     }
 
-    public void createNewLobby(String eventId) {
+    public void createNewLobby(Event event) {
         creatingState = true;
         Chat chat = new Chat();
         chat.setCreatedAt(System.currentTimeMillis());
-        chat.setEventId(eventId);
-        String chatId = FirebaseActions.getInstance().createLobby(eventId, chat);
-        FirebaseActions.getInstance().joinLobby(eventId, chatId);
+        chat.setEventId(event.getEventId());
+        chat.setEventType(event);
+        String chatId = FirebaseActions.getInstance().createLobby(event.getEventId(), chat);
+        FirebaseActions.getInstance().joinLobby(event.getEventId(), chatId);
         chat.setId(chatId);
         currentChat = chat;
         FirebaseActions.getInstance().saveChat(chat);
         Log.d(TAG, "A lobby with id " + chatId + " was created, waiting for another user.");
-        listenJoiningUsers(eventId, chatId);
+        listenJoiningUsers(event.getEventId(), chatId);
     }
 
     public void listenJoiningUsers(String eventId, String chatId) {

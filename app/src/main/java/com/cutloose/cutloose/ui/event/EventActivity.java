@@ -77,7 +77,7 @@ public class EventActivity extends BaseActivity {
                         ((CutLoose)(getApplication())).getDatabase().clicksDao().insertClicks(new Clicks(eventAction.getModel().getEventId(), FirebaseAuth.getInstance().getUid()));
                         eventAction.getModel().setPopularity(eventAction.getModel().getPopularity() + 1);
                         Intent intent = new Intent( EventActivity.this, ChatActivity.class );
-                        intent.putExtra("eventId", eventAction.getModel().getEventId());
+                        intent.putExtra("event", eventAction.getModel());
                         startActivity( intent );
                 }
             }

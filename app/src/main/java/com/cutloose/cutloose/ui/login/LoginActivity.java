@@ -89,6 +89,7 @@ public class LoginActivity extends BaseActivity {
 
     private void startEventActivity() {
         Intent intent = new Intent(this, EventActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
     }
 }

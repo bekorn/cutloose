@@ -56,6 +56,7 @@ public class MyChatsFragment extends BaseFragment {
                 switch( chatAction.getActionType() ) {
                     case RECYCLER_ITEM_CLICK:
                         Intent intent = new Intent( getContext(), ChatActivity.class );
+                        intent.putExtra("event", chatAction.getModel().getEventType());
                         intent.putExtra( "chatId", chatAction.getModel().getId() );
                         intent.putExtra( "eventId", chatAction.getModel().getEventId() );
                         intent.putExtra( "owners", chatAction.getModel().getOwners() );

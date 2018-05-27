@@ -1,10 +1,12 @@
 package com.cutloose.cutloose.model;
 
 import android.databinding.Bindable;
+import android.os.Parcel;
+import android.os.Parcelable;
 
 import com.cutloose.cutloose.BR;
 
-public class Event extends BaseModel {
+public class Event extends BaseModel implements Parcelable{
 
     private String eventId;
     private String name;
@@ -22,6 +24,40 @@ public class Event extends BaseModel {
         this.popularity = popularity;
         this.activeEventsCount = activeEventsCount;
     }
+
+    protected Event(Parcel in) {
+        eventId = in.readString();
+        name = in.readString();
+        pictureURL = in.readString();
+        popularity = in.readInt();
+        activeEventsCount = in.readInt();
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(eventId);
+        dest.writeString(name);
+        dest.writeString(pictureURL);
+        dest.writeInt(popularity);
+        dest.writeInt(activeEventsCount);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    public static final Creator<Event> CREATOR = new Creator<Event>() {
+        @Override
+        public Event createFromParcel(Parcel in) {
+            return new Event(in);
+        }
+
+        @Override
+        public Event[] newArray(int size) {
+            return new Event[size];
+        }
+    };
 
     public String getEventId() {
         return eventId;

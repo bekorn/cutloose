@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 
 import com.cutloose.cutloose.R;
 import com.cutloose.cutloose.databinding.ChatActivityBinding;
+import com.cutloose.cutloose.model.Event;
 import com.cutloose.cutloose.model.Profile;
 import com.cutloose.cutloose.ui.chat.chat_users.ChatUsersFragment;
 import com.cutloose.cutloose.ui.common.Action.Action;
@@ -38,20 +39,18 @@ public class ChatActivity extends BaseActivity {
         mChatActivityBinding = (ChatActivityBinding) mViewDataBinding;
         mChatActivityBinding.setViewModel( mChatActivityViewModel );
 
-        if(getIntent().getStringExtra("chatId") != null) {
+        Event event = getIntent().getParcelableExtra("event");
+        setTitle(event.getName());
 
+        if(getIntent().getStringExtra("chatId") != null) {
             String chatId = getIntent().getStringExtra("chatId");
-            String eventId = getIntent().getStringExtra("eventId");
-            chatFragment.fetchData(eventId, chatId);
-            mChatActivityViewModel.listenJoiningUsers(eventId, chatId);
+            chatFragment.fetchData(event.getEventId(), chatId);
+            mChatActivityViewModel.listenJoiningUsers(event.getEventId(), chatId);
             observeChatUsersChange();
         } else {
 
             mChatActivityViewModel.mSearching.set(true);
-
-            String eventId = getIntent().getStringExtra("eventId");
-            mChatActivityViewModel.checkExistingLobbies(eventId);
-
+            mChatActivityViewModel.checkExistingLobbies(event);
             observeActions();
         }
     }
