@@ -22,16 +22,20 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 
-public class ChatActivityViewModel extends BaseViewModel {
-    public ObservableBoolean mSearching = new ObservableBoolean();
-    public ObservableBoolean showUsers = new ObservableBoolean();
-    private MutableLiveData<ArrayList<Profile>> chatUsers = new MutableLiveData<>();
+public class ChatActivityViewModel extends BaseViewModel<Chat, LobbyAction> {
+
     private final String TAG = "ChatActivityViewModel";
+    public final ObservableBoolean mSearching = new ObservableBoolean();
+    public final ObservableBoolean showUsers = new ObservableBoolean();
+    private final MutableLiveData<ArrayList<Profile>> chatUsers = new MutableLiveData<>();
     private Chat currentChat = null;
     private boolean creatingState = false;
 
     public void checkExistingLobbies(Event event) {
-        FirebaseActions.getInstance().findLobby(event.getEventId()).addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+
+        FirebaseActions.getInstance()
+                .findLobby(event.getEventId())
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if (task.getResult().isEmpty()) {
@@ -53,6 +57,7 @@ public class ChatActivityViewModel extends BaseViewModel {
     }
 
     public void createNewLobby(Event event) {
+
         creatingState = true;
         Chat chat = new Chat();
         chat.setCreatedAt(System.currentTimeMillis());
@@ -68,7 +73,10 @@ public class ChatActivityViewModel extends BaseViewModel {
     }
 
     public void listenJoiningUsers(String eventId, String chatId) {
-        FirebaseActions.getInstance().listenJoinedUsers(eventId, chatId).addSnapshotListener(new EventListener<QuerySnapshot>() {
+
+        FirebaseActions.getInstance()
+                .listenJoinedUsers(eventId, chatId)
+                .addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(QuerySnapshot queryDocumentSnapshots, FirebaseFirestoreException e) {
                 System.out.println("Size LUL" + queryDocumentSnapshots.size());
@@ -76,30 +84,30 @@ public class ChatActivityViewModel extends BaseViewModel {
                     informChatFound();
                     creatingState = false;
                 }
-                ArrayList<Profile> usrs = chatUsers.getValue() == null ? new ArrayList<>() : chatUsers.getValue();
+                ArrayList<Profile> users = chatUsers.getValue() == null ? new ArrayList<>() : chatUsers.getValue();
                 for (DocumentChange doc : queryDocumentSnapshots.getDocumentChanges()) {
 
                     Profile profile = (doc.getDocument().toObject(Profile.class));
                     boolean add = true;
 
-                    for (int i = 0; i < usrs.size(); i++) {
-                        if (profile.getId().equals(usrs.get(i).getId())) {
+                    for (int i = 0; i < users.size(); i++) {
+                        if (profile.getId().equals(users.get(i).getId())) {
                             add = false;
                             break;
                         }
                     }
 
-                    if (add) usrs.add(profile);
+                    if (add) users.add(profile);
                 }
-                chatUsers.setValue(usrs);
+                chatUsers.setValue(users);
             }
         });
     }
 
     public void informChatFound() {
-        Action<Chat, LobbyAction> action = new Action<>(currentChat, LobbyAction.ON_CHAT_FOUND);
-        setAction(action);
-        setAction(null);
+
+        setAction( new Action<>( currentChat, LobbyAction.ON_CHAT_FOUND ) );
+        setAction( null );
         mSearching.set(false);
     }
 
@@ -110,5 +118,4 @@ public class ChatActivityViewModel extends BaseViewModel {
     public MutableLiveData<ArrayList<Profile>> getChatUsers() {
         return chatUsers;
     }
-
 }

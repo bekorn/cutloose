@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 
 import com.cutloose.cutloose.R;
 import com.cutloose.cutloose.databinding.ChatActivityBinding;
+import com.cutloose.cutloose.model.Chat;
 import com.cutloose.cutloose.model.Event;
 import com.cutloose.cutloose.model.Profile;
 import com.cutloose.cutloose.ui.chat.chat_users.ChatUsersFragment;
@@ -66,18 +67,17 @@ public class ChatActivity extends BaseActivity {
     }
 
     private void observeActions() {
-        mChatActivityViewModel.observeAction(this, new Observer<Action>() {
+        mChatActivityViewModel.observeAction(this, new Observer<Action<Chat, LobbyAction>>() {
             @Override
-            public void onChanged(@Nullable Action action) {
+            public void onChanged(@Nullable Action<Chat, LobbyAction> action) {
+
                 if (action == null) return;
 
-                if (action.getActionType() instanceof LobbyAction) {
-                    switch ((LobbyAction) (action.getActionType())) {
-                        case ON_CHAT_FOUND:
-                            chatFragment.fetchData(mChatActivityViewModel.getCurrentChat().getEventId(), mChatActivityViewModel.getCurrentChat().getId());
-                            observeChatUsersChange();
-                            return;
-                    }
+                switch( action.getActionType() ) {
+                    case ON_CHAT_FOUND:
+                        chatFragment.fetchData(mChatActivityViewModel.getCurrentChat().getEventId(), mChatActivityViewModel.getCurrentChat().getId());
+                        observeChatUsersChange();
+                        return;
                 }
             }
         });
