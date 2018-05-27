@@ -57,11 +57,13 @@ public class Event extends BaseModel {
         notifyPropertyChanged(BR.popularity);
     }
 
+    @Bindable
     public int getActiveEventsCount() {
         return activeEventsCount;
     }
 
     public void setActiveEventsCount( int activeEventsCount ) {
         this.activeEventsCount = activeEventsCount;
+        notifyPropertyChanged(BR.activeEventsCount);
     }
 }
